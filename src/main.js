@@ -141,30 +141,6 @@ function startGame(err) {
   //   next(g);
   // });
 
-  let panicOMeterValue = 0;
-  game.chains.draw.push((g, next) => {
-    // Get amount of panic
-    let panicOMeter = 0;
-    game.objects.lists.kids.each(
-      (k) => (panicOMeter += k.state == "Panic" ? 1 : 0)
-    );
-    if (panicOMeter > panicOMeterValue) panicOMeterValue += 0.01;
-    if (panicOMeter < panicOMeterValue) panicOMeterValue -= 0.01;
-
-    // Show it on the Panic'O'Meter™️
-    const panic = images["panic_o_meter"];
-    const needle = images["needle"];
-    g.drawCenteredImage(panic, 2650, 100);
-    g.save();
-    g.context.translate(2648, 155);
-    g.context.rotate(
-      lerp(-0.9 * Math.PI, -0.1 * Math.PI, panicOMeterValue / 5)
-    );
-    g.drawImage(needle, -134, -11);
-    g.restore();
-    next(g);
-  });
-
   function getRandomPosition() {
     return new Vector(
       lerp(0, 2800, Math.random()),
