@@ -127,17 +127,19 @@ function startGame(err) {
     next(dt);
   });
 
-  game.chains.draw.push((g, next) => {
-    g.strokeStyle("red");
-    for (const collidable of game.objects.lists.collidable) {
-      g.strokeCircle(
-        collidable.position.x,
-        collidable.position.y,
-        collidable.collisionRadius
-      );
-    }
-    next(g);
-  });
+  // Show collisions for debugging
+
+  // game.chains.draw.push((g, next) => {
+  //   g.strokeStyle("red");
+  //   for (const collidable of game.objects.lists.collidable) {
+  //     g.strokeCircle(
+  //       collidable.position.x,
+  //       collidable.position.y,
+  //       collidable.collisionRadius
+  //     );
+  //   }
+  //   next(g);
+  // });
 
   let panicOMeterValue = 0;
   game.chains.draw.push((g, next) => {
