@@ -4,6 +4,7 @@ import { lerp } from "../engine/math";
 
 export default class Person extends GameObject {
   bobAngle = 0.1;
+  bobRate = 0.2;
 
   constructor({ x, y, image, origin }) {
     super({ x, y });
@@ -33,14 +34,15 @@ export default class Person extends GameObject {
 
   walkingAnimation(dt) {
     this.animationTime += dt;
-    switch(this.state) {
-      case 'Idle':
+    switch (this.state) {
+      case "Idle":
         this.angle = 0;
         break;
-      case 'Walking':
-        this.angle = this.animationTime % 0.5 > 0.2 ? -this.bobAngle : this.bobAngle;
+      case "Walking": {
+        const bobState = this.animationTime % (this.bobRate * 2) > this.bobRate;
+        this.angle = bobState ? -this.bobAngle : this.bobAngle;
         break;
+      }
     }
   }
-
 }
