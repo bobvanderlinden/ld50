@@ -15,6 +15,7 @@ import EditorState from "./engine/editorstate.js";
 import Player from "./entities/player";
 import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
+import Vector from "./engine/vector";
 
 let game;
 const rs = {
@@ -120,8 +121,13 @@ function startGame(err) {
   game.objects.add(player);
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
+    const image = images[`child_${nr}`];
     game.objects.add(
-      new Child({ x: nr * 100, y: 100, image: images[`child_${nr}`] })
+      new Child({
+        image,
+        x: nr * 100, y: 100,
+        origin: new Vector(image.width / 2, 0.9 * image.height)
+      })
     );
   }
   game.changeState(new GameplayState({ game, player }));
