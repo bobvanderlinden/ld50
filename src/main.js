@@ -95,7 +95,7 @@ function startGame(err) {
   game.levelSystem = new LevelSystem({ game });
 
   function drawBackground(g, next) {
-    g.fillStyle("white");
+    g.fillStyle("lightgray");
     g.fillRectangle(0, 0, game.width, game.height);
     const scaling = game.width / 2800;
     g.scale(0, 0, scaling, scaling, () => {
