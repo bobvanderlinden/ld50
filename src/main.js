@@ -19,6 +19,7 @@ import Vector from "./engine/vector";
 import { handleCollision } from "./engine/physics.js";
 import Thing from "./entities/thing";
 import { lerp } from "./engine/math.js";
+import FailState from "./failstate.js";
 
 let game;
 const rs = {
@@ -50,6 +51,7 @@ const rs = {
     "exclamation",
     "panic_o_meter",
     "needle",
+    "failed",
   ],
 };
 
@@ -86,8 +88,9 @@ function startGame(err) {
   game.objects.lists.player = game.objects.createIndexList("player");
   game.objects.lists.draw = game.objects.createIndexList("draw");
   game.objects.lists.update = game.objects.createIndexList("update");
-  game.objects.lists.collidable =
-    game.objects.createIndexList("collisionRadius");
+  game.objects.lists.collidable = game.objects.createIndexList(
+    "collisionRadius"
+  );
   game.objects.lists.kids = game.objects.createIndexList("kid");
 
   // Auto-refresh
@@ -325,7 +328,17 @@ function startGame(err) {
       })
     );
   }
-  game.changeState(new GameplayState({ game, player }));
+
+  function onStart() {
+    game.changeState(new GameplayState({ game, player, onFail }));
+  }
+
+  function onFail() {
+    game.changeState(new FailState({ game, player, onNext: onStart }));
+  }
+
+  onStart();
+
   game.start();
   window.game = game;
 }
