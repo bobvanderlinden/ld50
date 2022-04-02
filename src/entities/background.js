@@ -2,7 +2,7 @@ import GameObject from '../engine/game-object';
 
 export default class Background extends GameObject {
   constructor({ image, game }) {
-    super({ x: 0, y: 0 });
+    super({ x: 0, y: -1 * Infinity });
     this.image = image;
     this.game = game;
   }
