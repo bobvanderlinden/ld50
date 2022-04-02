@@ -52,6 +52,8 @@ const rs = {
     "panic_o_meter",
     "needle",
     "failed",
+    "tears_1",
+    "tears_2",
   ],
 };
 
@@ -321,6 +323,7 @@ function startGame(err) {
       new Child({
         image,
         exclamation: images["exclamation"],
+        tears: [images.tears_1, images.tears_2],
         x: position.x,
         y: position.y,
         origin: new Vector(image.width / 2, 0.9 * image.height),

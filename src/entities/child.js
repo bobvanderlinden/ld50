@@ -9,9 +9,10 @@ export default class Child extends Person {
   touchRadius = 21;
   bobAngle = 0.1;
 
-  constructor({ x, y, image, exclamation, origin, getRandomPosition }) {
+  constructor({ x, y, image, exclamation, tears, origin, getRandomPosition }) {
     super({ x, y, image, origin });
     this.exclamation = exclamation;
+    this.tears = tears;
     this.time = lerp(1, 5, Math.random());
     this.getRandomPosition = getRandomPosition;
   }
@@ -29,6 +30,7 @@ export default class Child extends Person {
       this.velocity.set(0, 0);
     } else if (this.state === "Panic") {
       this.velocity.set(0, 0);
+      this.angle = 0;
     }
     if (this.time > 0) return;
     this[`transitionFrom${this.state}`]();
@@ -59,13 +61,16 @@ export default class Child extends Person {
 
   panic() {
     this.state = "Panic";
-    this.time = Infinity;
+    this.time = 99999;
   }
 
   draw(g) {
     super.draw(g);
 
     if (this.state === "Panic") {
+      const tears = this.tears[(this.time * 3) % this.tears.length | 0];
+      g.drawCenteredImage(tears, this.position.x, this.position.y - 113);
+
       g.drawCenteredImage(
         this.exclamation,
         this.position.x,
