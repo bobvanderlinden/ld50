@@ -2,6 +2,7 @@ import GameObject from '../engine/game-object';
 import Vector from '../engine/vector';
 
 export default class Player extends GameObject {
+  collisionRadius = 40;
   constructor({ x, y, image }) {
     super({ x, y });
     this.image = image;

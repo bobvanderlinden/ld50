@@ -3,6 +3,7 @@ import { lerp } from "../engine/math";
 import Vector from "../engine/vector";
 
 export default class Child extends GameObject {
+  collisionRadius = 20;
   constructor({ x, y, image, origin }) {
     super({ x, y });
     if (!origin) origin = new Vector(image.width / 2, image.height);
