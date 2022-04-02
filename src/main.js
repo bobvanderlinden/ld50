@@ -17,12 +17,8 @@ import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
 import { handleCollision } from "./engine/physics.js";
-<<<<<<< HEAD
-import { lerp } from "./engine/math.js";
-||||||| 776a2cf
-=======
 import Thing from "./entities/thing";
->>>>>>> f2a9e2c42165301acb7bff42430932e998b9bab0
+import { lerp } from "./engine/math.js";
 
 let game;
 const rs = {
