@@ -5,10 +5,11 @@ export default class Player extends Person {
   collisionRadius = 40;
   touchable = true;
   touchRadius = 41;
+  bobAngle = 0.05;
+
   constructor({ x, y, image, origin }) {
     super({ x, y, image, origin });
     this.movement = new Vector(0, 0);
-    this.bobAngle = 0.05;
   }
 
   update(dt) {
