@@ -39,7 +39,9 @@ export default class GameplayState {
   }
 
   panicChild() {
-    const kids = [...this.game.objects.lists.kids];
+    const kids = [...this.game.objects.lists.kids].filter(
+      (kid) => kid.state !== "Panic"
+    );
     const kid = pickRandom(kids);
 
     kid.panic();
