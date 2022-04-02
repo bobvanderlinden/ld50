@@ -6,6 +6,8 @@ export default class Child extends Person {
   constructor({ x, y, image, origin }) {
     super({ x, y, image, origin });
     this.time = lerp(1, 5, Math.random());
+    this.kid = true;
+    this.panic = false;
   }
 
   update(dt) {

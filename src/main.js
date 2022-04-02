@@ -82,6 +82,7 @@ function startGame(err) {
   game.objects.lists.collidable = game.objects.createIndexList(
     "collisionRadius"
   );
+  game.objects.lists.kids = game.objects.createIndexList("kid");
 
   // function pickRandom(arr) {
   //   return arr[(arr.length * Math.random()) | 0];
@@ -136,6 +137,15 @@ function startGame(err) {
         collidable.collisionRadius
       );
     }
+    next(g);
+  });
+
+  game.chains.draw.push((g, next) => {
+    let panicOMeter = 0;
+    game.objects.lists.kids.each((k) => (panicOMeter += k.panic ? 1 : 0));
+    g.fillStyle("red");
+    g.font("50px Tahoma");
+    g.fillText(panicOMeter, 2300, -400);
     next(g);
   });
 
