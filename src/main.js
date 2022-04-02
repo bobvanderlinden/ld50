@@ -16,6 +16,7 @@ import EditorState from "./engine/editorstate.js";
 import Player from "./entities/player";
 import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
+import Background from './entities/background';
 
 let game;
 const rs = {
@@ -107,6 +108,9 @@ function startGame(err) {
 
   const player = new Player({ x: 0, y: 0, image: images["test"] });
   game.objects.add(player);
+
+  game.objects.add(new Background({ image: images["stones"], game }));
+  game.objects.add(new Background({ image: images["blurred_grass"], game }));
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     game.objects.add(
