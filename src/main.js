@@ -44,6 +44,9 @@ const rs = {
     "tiny_tree_2",
     "tree_1",
     "tree_2",
+    "seesaw",
+    "slide",
+    "swings",
   ],
 };
 
@@ -192,6 +195,14 @@ function startGame(err) {
   game.objects.add(
     new Thing({ image: images["bushes_2"], x: 2100 + a.x, y: 500 + a.y })
   );
+  game.objects.add(new Thing({ image: images["bush_1"], x: 600, y: 600 }));
+  game.objects.add(new Thing({ image: images["bush_2"], x: 1900, y: 1200 }));
+  game.objects.add(new Thing({ image: images["bush_3"], x: -400, y: 1000 }));
+  game.objects.add(new Thing({ image: images["bushes_1"], x: -500, y: 200 }));
+  game.objects.add(new Thing({ image: images["bushes_2"], x: 2100, y: 500 }));
+  game.objects.add(new Thing({ image: images["seesaw"], x: 1400, y: 300 }));
+  game.objects.add(new Thing({ image: images["slide"], x: 300, y: 1200 }));
+  game.objects.add(new Thing({ image: images["swings"], x: 1200, y: 900 }));
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     const image = images[`child_${nr}`];
