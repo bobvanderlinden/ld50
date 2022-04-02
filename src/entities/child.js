@@ -7,6 +7,8 @@ export default class Child extends Person {
     super({ x, y, image, origin });
     this.time = lerp(1, 5, Math.random());
     this.getRandomPosition = getRandomPosition;
+    this.kid = true;
+    this.panic = false;
   }
 
   update(dt) {

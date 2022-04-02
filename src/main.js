@@ -17,7 +17,12 @@ import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
 import { handleCollision } from "./engine/physics.js";
+<<<<<<< HEAD
 import { lerp } from "./engine/math.js";
+||||||| 776a2cf
+=======
+import Thing from "./entities/thing";
+>>>>>>> f2a9e2c42165301acb7bff42430932e998b9bab0
 
 let game;
 const rs = {
@@ -82,6 +87,7 @@ function startGame(err) {
   game.objects.lists.collidable = game.objects.createIndexList(
     "collisionRadius"
   );
+  game.objects.lists.kids = game.objects.createIndexList("kid");
 
   // function pickRandom(arr) {
   //   return arr[(arr.length * Math.random()) | 0];
@@ -139,6 +145,15 @@ function startGame(err) {
     next(g);
   });
 
+  game.chains.draw.push((g, next) => {
+    let panicOMeter = 0;
+    game.objects.lists.kids.each((k) => (panicOMeter += k.panic ? 1 : 0));
+    g.fillStyle("red");
+    g.font("50px Tahoma");
+    g.fillText(panicOMeter, 2300, -400);
+    next(g);
+  });
+
   function getRandomPosition() {
     return new Vector(
       lerp(0, 2800, Math.random()),
@@ -148,6 +163,21 @@ function startGame(err) {
 
   const player = new Player({ x: 0, y: 0, image: images["teacher"] });
   game.objects.add(player);
+
+  game.objects.add(new Thing({ image: images["school"], x: 900, y: -100 }));
+  game.objects.add(new Thing({ image: images["tree_1"], x: 500, y: 600 }));
+  game.objects.add(new Thing({ image: images["tree_2"], x: 2000, y: 400 }));
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_1"], x: -500, y: 1000 })
+  );
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_2"], x: 1700, y: 1200 })
+  );
+  game.objects.add(new Thing({ image: images["bush_1"], x: 600, y: 600 }));
+  game.objects.add(new Thing({ image: images["bush_2"], x: 1900, y: 1200 }));
+  game.objects.add(new Thing({ image: images["bush_3"], x: -400, y: 1000 }));
+  game.objects.add(new Thing({ image: images["bushes_1"], x: -500, y: 200 }));
+  game.objects.add(new Thing({ image: images["bushes_2"], x: 2100, y: 500 }));
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     const image = images[`child_${nr}`];
