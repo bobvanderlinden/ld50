@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bobvanderlinden/ld48.git"
+    "url": "git+https://github.com/bobvanderlinden/ld50.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bobvanderlinden/ld48/issues"
+    "url": "https://github.com/bobvanderlinden/ld50/issues"
   },
-  "homepage": "https://github.com/bobvanderlinden/ld48#readme",
+  "homepage": "https://github.com/bobvanderlinden/ld50#readme",
   "prettier": {},
   "eslintConfig": {
     "parser": "babel-eslint",

@@ -1,8 +1,6 @@
-# ld50: Just Keep Sinking
+# Work in progress
 
-The theme of Ludum Dare 50: Deeper and Deeper
-
-Let's explore the depths of the oceans and hunt for some treasure.
+The theme of Ludum Dare 50: Delay the inevitable
 
 [Play here](https://bobvanderlinden.github.io/ld50/)
 
@@ -12,3 +10,4 @@ Let's explore the depths of the oceans and hunt for some treasure.
 - [@nickschot](https://github.com/nickschot/)
 - [@bobvanderlinden](https://github.com/bobvanderlinden/)
 - [@timendus](https://github.com/timendus)
+- [@mirandavdende](https://github.com/mirandavdende)
