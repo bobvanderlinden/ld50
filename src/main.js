@@ -143,7 +143,7 @@ function startGame(err) {
     game.objects.lists.kids.each((k) => (panicOMeter += k.panic ? 1 : 0));
     g.fillStyle("red");
     g.font("50px Tahoma");
-    g.fillText(panicOMeter, 2300, -400);
+    g.fillText(panicOMeter, 2700, 100);
     next(g);
   });
 
