@@ -3,6 +3,8 @@ import Vector from "../engine/vector";
 import { lerp } from "../engine/math";
 
 export default class Person extends GameObject {
+  bobAngle = 0.1;
+
   constructor({ x, y, image, origin }) {
     super({ x, y });
     if (!origin) origin = new Vector(image.width / 2, image.height - 10);
@@ -13,7 +15,6 @@ export default class Person extends GameObject {
     this.state = "Idle";
     this.angle = 0;
     this.animationTime = 0;
-    this.bobAngle = 0.1;
   }
 
   draw(g) {

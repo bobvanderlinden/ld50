@@ -9,3 +9,7 @@ export function lerpV(a, b, t) {
 export function sign(b) {
   return b ? 1 : 0;
 }
+
+export function pickRandom(arr) {
+  return arr[(arr.length * Math.random()) | 0];
+}

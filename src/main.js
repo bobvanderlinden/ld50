@@ -47,6 +47,9 @@ const rs = {
     "seesaw",
     "slide",
     "swings",
+    "exclamation",
+    "panic_o_meter",
+    "needle",
   ],
 };
 
@@ -83,14 +86,9 @@ function startGame(err) {
   game.objects.lists.player = game.objects.createIndexList("player");
   game.objects.lists.draw = game.objects.createIndexList("draw");
   game.objects.lists.update = game.objects.createIndexList("update");
-  game.objects.lists.collidable = game.objects.createIndexList(
-    "collisionRadius"
-  );
+  game.objects.lists.collidable =
+    game.objects.createIndexList("collisionRadius");
   game.objects.lists.kids = game.objects.createIndexList("kid");
-
-  // function pickRandom(arr) {
-  //   return arr[(arr.length * Math.random()) | 0];
-  // }
 
   // Auto-refresh
   game.autoRefresh = new AutoRefresh({ game });
@@ -142,11 +140,27 @@ function startGame(err) {
   });
 
   game.chains.draw.push((g, next) => {
+    // Get amount of panic
     let panicOMeter = 0;
     game.objects.lists.kids.each((k) => (panicOMeter += k.panic ? 1 : 0));
-    g.fillStyle("red");
-    g.font("50px Tahoma");
-    g.fillText(panicOMeter, 2300, -400);
+
+    // Show it on the Panic'O'Meter™️
+    const panic = images["panic_o_meter"];
+    const needle = images["needle"];
+    g.drawCenteredImage(panic, 2650, 100);
+    g.rotate(2650, 100, 0, () => {
+      g.drawImage(
+        needle,
+        0,
+        0,
+        needle.width,
+        needle.height,
+        2650,
+        100,
+        needle.width,
+        needle.height
+      );
+    });
     next(g);
   });
 
@@ -254,6 +268,7 @@ function startGame(err) {
     game.objects.add(
       new Child({
         image,
+        exclamation: images["exclamation"],
         x: position.x,
         y: position.y,
         origin: new Vector(image.width / 2, 0.9 * image.height),
