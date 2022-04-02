@@ -13,7 +13,9 @@ import AutoRefresh from "./engine/autorefresh.js";
 import Mouse from "./engine/mouse.js";
 import EditorState from "./engine/editorstate.js";
 import Player from './entities/player';
+import GameplayState from './state';
 
+var g, game;
 var rs = {
   audio: [
     "test",
@@ -22,7 +24,7 @@ var rs = {
     "test",
   ],
 };
-var g, game;
+
 platform.once("load", () => {
   var canvas = document.getElementById("main");
   game = g = new Game(startGame, canvas, [
@@ -94,54 +96,6 @@ function startGame(err) {
       next(g);
     });
   })();
-
-  //#gameobjects
-
-  class GameplayState {
-    constructor({ game, player }) {
-      this.game = game;
-      this.player = player;
-      this.update = this.update.bind(this);
-      this.keydown = this.keydown.bind(this);
-      this.pingtime = Math.floor(Math.random() * 15);
-    }
-
-    enable() {
-      this.game.camera.reset();
-      this.game.chains.update.push(this.update);
-      this.game.on("keydown", this.keydown);
-    }
-
-    disable() {
-      this.game.chains.update.remove(this.update);
-      this.game.removeListener("keydown", this.keydown);
-    }
-
-    keydown(key) {
-    }
-
-    update(dt) {
-
-      // Update camera
-      // this.game.camera.y = Math.min(
-      //   this.player.position.y,
-      //   end.bottom -
-      //     (this.game.height * 0.5) / this.game.camera.getPixelsPerMeter()
-      // );
-    }
-  }
-
-  //#states
-
-  // function level_sym1() {
-  //   return {
-  //     name: "Level 1",
-  //     objects: [
-  //     ],
-  //     clone: level_sym1,
-  //     nextLevel: level_sym2,
-  //   };
-  // }
 
   const player = new Player({ x: 0, y: 0, sprite: images["test"] });
   game.changeState(new GameplayState({ game, player }));
