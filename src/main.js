@@ -16,6 +16,7 @@ import Player from "./entities/player";
 import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
+import { handleCollision } from "./engine/physics.js";
 
 let game;
 const rs = {
@@ -77,6 +78,9 @@ function startGame(err) {
   game.objects.lists.player = game.objects.createIndexList("player");
   game.objects.lists.draw = game.objects.createIndexList("draw");
   game.objects.lists.update = game.objects.createIndexList("update");
+  game.objects.lists.collidable = game.objects.createIndexList(
+    "collisionRadius"
+  );
 
   // function pickRandom(arr) {
   //   return arr[(arr.length * Math.random()) | 0];
@@ -113,6 +117,23 @@ function startGame(err) {
     );
     for (const o of objs) {
       o.draw(g);
+    }
+    next(g);
+  });
+
+  game.chains.update.push((dt, next) => {
+    handleCollision([...game.objects.lists.collidable], []);
+    next(dt);
+  });
+
+  game.chains.draw.push((g, next) => {
+    g.strokeStyle("red");
+    for (const collidable of game.objects.lists.collidable) {
+      g.strokeCircle(
+        collidable.position.x,
+        collidable.position.y,
+        collidable.collisionRadius
+      );
     }
     next(g);
   });
