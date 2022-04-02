@@ -96,6 +96,19 @@ function startGame(err) {
 
   game.levelSystem = new LevelSystem({ game });
 
+  function drawBackground(g, next) {
+    g.fillStyle("white");
+    g.fillRectangle(0, 0, game.width, game.height);
+    const scaling = game.width / 2800;
+    g.scale(0, 0, scaling, scaling, () => {
+      g.drawImage(images["stones"], 0, 0);
+      g.drawImage(images["blurred_grass"], 0, 0);
+      next(g);
+    });
+  }
+
+  game.chains.draw.insertBefore(drawBackground, game.chains.draw.camera);
+
   game.chains.draw.push((g, next) => {
     const objs = [...game.objects.lists.draw].sort(
       (a, b) => a.position.y - b.position.y
@@ -108,9 +121,6 @@ function startGame(err) {
 
   const player = new Player({ x: 0, y: 0, image: images["test"] });
   game.objects.add(player);
-
-  game.objects.add(new Background({ image: images["stones"], game }));
-  game.objects.add(new Background({ image: images["blurred_grass"], game }));
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     game.objects.add(
