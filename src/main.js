@@ -168,10 +168,22 @@ function startGame(err) {
     new Thing({ image: images["school"], ...transform({ x: 900, y: -100 }) })
   );
   game.objects.add(
-    new Thing({ image: images["tree_1"], ...transform({ x: 500, y: 600 }) })
+    new Thing({
+      image: images["tree_1"],
+      ...transform({ x: 500, y: 600 }),
+      collisionRadius: 100,
+      origin: new Vector(
+        images["tree_1"].width / 2,
+        0.7 * images["tree_1"].height
+      ),
+    })
   );
   game.objects.add(
-    new Thing({ image: images["tree_2"], ...transform({ x: 2000, y: 400 }) })
+    new Thing({
+      image: images["tree_2"],
+      ...transform({ x: 2000, y: 400 }),
+      collisionRadius: 120,
+    })
   );
   game.objects.add(
     new Thing({
@@ -219,7 +231,15 @@ function startGame(err) {
     new Thing({ image: images["seesaw"], ...transform({ x: 1400, y: 300 }) })
   );
   game.objects.add(
-    new Thing({ image: images["slide"], ...transform({ x: 300, y: 1200 }) })
+    new Thing({
+      image: images["slide"],
+      ...transform({ x: 300, y: 1200 }),
+      collisionRadius: 120,
+      origin: new Vector(
+        images["slide"].width / 2,
+        0.7 * images["slide"].height
+      ),
+    })
   );
   game.objects.add(
     new Thing({ image: images["swings"], ...transform({ x: 1200, y: 900 }) })
