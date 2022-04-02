@@ -4,6 +4,8 @@ import Player from "./player";
 
 export default class Child extends Person {
   collisionRadius = 20;
+  touchable = true;
+  touchRadius = 21;
   constructor({ x, y, image, exclamation, origin, getRandomPosition }) {
     super({ x, y, image, origin });
     this.exclamation = exclamation;
@@ -55,7 +57,7 @@ export default class Child extends Person {
 
   panic() {
     this.state = "Panic";
-    this.time = 5;
+    this.time = Infinity;
   }
 
   draw(g) {

@@ -3,6 +3,8 @@ import Vector from "../engine/vector";
 
 export default class Player extends Person {
   collisionRadius = 40;
+  touchable = true;
+  touchRadius = 41;
   constructor({ x, y, image, origin }) {
     super({ x, y, image, origin });
     this.movement = new Vector(0, 0);
