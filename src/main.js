@@ -12,14 +12,12 @@ import Camera from "./engine/camera.js";
 import AutoRefresh from "./engine/autorefresh.js";
 import Mouse from "./engine/mouse.js";
 import EditorState from "./engine/editorstate.js";
-import Player from './entities/player';
-import GameplayState from './gameplaystate';
+import Player from "./entities/player";
+import GameplayState from "./gameplaystate";
 
 var g, game;
 var rs = {
-  audio: [
-    "test",
-  ],
+  audio: ["test"],
   images: [
     "test",
   ],
@@ -77,7 +75,9 @@ function startGame(err) {
   game.levelSystem = new LevelSystem({ game });
 
   game.chains.draw.push((g, next) => {
-    const objs = [...game.objects.lists.draw].sort((a,b) => b.position.y - a.position.y);
+    const objs = [...game.objects.lists.draw].sort(
+      (a, b) => b.position.y - a.position.y
+    );
     for (const o of objs) {
       o.draw(g);
     }
