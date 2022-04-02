@@ -6,7 +6,6 @@ import state from "./engine/state.js";
 import LevelSystem from "./engine/levelsystem.js";
 import collision from "./engine/collision.js";
 import keyboard from "./engine/keyboard.js";
-import quake from "./engine/quake.js";
 import resources from "./engine/resources.js";
 import TouchSystem from "./engine/touchsystem.js";
 import Camera from "./engine/camera.js";
@@ -52,7 +51,6 @@ platform.once("load", () => {
     resources(rs),
     state,
     collision,
-    quake,
   ]);
 
   game.mouse = new Mouse({ game });
