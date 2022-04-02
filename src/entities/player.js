@@ -2,14 +2,14 @@ import GameObject from '../engine/game-object';
 import Vector from '../engine/vector';
 
 export default class Player extends GameObject {
-  constructor({ x, y, sprite }) {
+  constructor({ x, y, image }) {
     super({ x, y });
-    this.image = sprite;
+    this.image = image;
     this.velocity = new Vector(0, 0);
-    this.position = new Vector(0, 0);
+    this.position = new Vector(x, y);
   }
 
-  drawForeground(g) {
+  draw(g) {
     g.save();
     g.context.translate(this.position.x, this.position.y);
     g.context.scale(this.flipped ? -1 : 1, 1);
@@ -18,10 +18,7 @@ export default class Player extends GameObject {
   }
 
   update(dt) {
-    this.flipped = moving ? direction < 0 : this.flipped;
-    this.velocity.x = this.velocity.x * 0.9 + direction * speed * 0.1;
-    this.velocity.y = this.sinkRate;
-    this.position.addV(this.velocity.clone().multiply(dt * slowStart));
+    this.position.addV(this.velocity.clone().multiply(dt));
   }
 
   touch(other) {

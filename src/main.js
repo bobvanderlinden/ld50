@@ -55,6 +55,8 @@ function startGame(err) {
   var images = g.resources.images;
   // var audio = g.resources.audio;
   g.objects.lists.player = g.objects.createIndexList("player");
+  g.objects.lists.draw = g.objects.createIndexList("draw");
+  g.objects.lists.update = g.objects.createIndexList("update");
 
   // function pickRandom(arr) {
   //   return arr[(arr.length * Math.random()) | 0];
@@ -73,27 +75,12 @@ function startGame(err) {
   game.levelSystem = new LevelSystem({ game });
 
   game.chains.draw.push((g, next) => {
-    g.save();
-    g.context.translate(-1024, 0);
-
-    g.context.fillStyle = "#0fb0fe";
-    g.context.fillRect(
-      0,
-      game.camera.y - (game.height / game.camera.getPixelsPerMeter()) * 0.5,
-      2048,
-      game.height / game.camera.getPixelsPerMeter()
-    );
-
-    g.restore();
+    const objs = [...game.objects.lists.draw].sort((a,b) => b.position.y - a.position.y);
+    for (const o of objs) {
+      o.draw(g);
+    }
     next(g);
   });
-
-  (function () {
-    game.chains.draw.push((g, next) => {
-      // TODO: Draw!
-      next(g);
-    });
-  })();
 
   //#gameobjects
 
@@ -103,7 +90,6 @@ function startGame(err) {
       this.player = player;
       this.update = this.update.bind(this);
       this.keydown = this.keydown.bind(this);
-      this.pingtime = Math.floor(Math.random() * 15);
     }
 
     enable() {
@@ -120,14 +106,17 @@ function startGame(err) {
     keydown(key) {
     }
 
-    update(dt) {
+    update(dt, next) {
+      function sign(b) {
+        return b ? 1 : 0;
+      }
+      const keys = this.game.keys;
+      const x = sign(keys.d) - sign(keys.a);
+      const y = sign(keys.s) - sign(keys.w);
+      this.player.velocity.set(x, y);
+      this.player.velocity.multiply(100);
 
-      // Update camera
-      // this.game.camera.y = Math.min(
-      //   this.player.position.y,
-      //   end.bottom -
-      //     (this.game.height * 0.5) / this.game.camera.getPixelsPerMeter()
-      // );
+      next(dt);
     }
   }
 
@@ -143,7 +132,8 @@ function startGame(err) {
   //   };
   // }
 
-  const player = new Player({ x: 0, y: 0, sprite: images["test"] });
+  const player = new Player({ x: 0, y: 0, image: images["test"] });
+  game.objects.add(player);
   game.changeState(new GameplayState({ game, player }));
   game.start();
   window.game = game;
