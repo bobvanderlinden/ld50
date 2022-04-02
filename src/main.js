@@ -15,7 +15,6 @@ import EditorState from "./engine/editorstate.js";
 import Player from "./entities/player";
 import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
-import Background from './entities/background';
 
 let game;
 const rs = {
