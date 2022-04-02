@@ -2,11 +2,15 @@ import GameObject from "../engine/game-object";
 import Vector from "../engine/vector";
 
 export default class Thing extends GameObject {
-  constructor({ x, y, image, origin }) {
-    super({ x, y });
+  mass = 1000;
+
+  constructor({ x, y, image, origin, collisionRadius }) {
+    super({ x, y, collisionRadius });
     if (!origin) origin = new Vector(image.width / 2, image.height);
     this.image = image;
     this.origin = origin;
+    this.velocity = new Vector(0, 0);
+    this.collisionRadius = collisionRadius || 80;
   }
 
   draw(g) {
