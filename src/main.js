@@ -116,7 +116,7 @@ function startGame(err) {
     next(g);
   });
 
-  const player = new Player({ x: 0, y: 0, image: images["test"] });
+  const player = new Player({ x: 0, y: 0, image: images["teacher"] });
   game.objects.add(player);
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
