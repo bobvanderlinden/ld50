@@ -17,6 +17,7 @@ import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
 import { handleCollision } from "./engine/physics.js";
+import Thing from "./entities/thing";
 
 let game;
 const rs = {
@@ -140,6 +141,21 @@ function startGame(err) {
 
   const player = new Player({ x: 0, y: 0, image: images["teacher"] });
   game.objects.add(player);
+
+  game.objects.add(new Thing({ image: images["school"], x: 900, y: -100 }));
+  game.objects.add(new Thing({ image: images["tree_1"], x: 500, y: 600 }));
+  game.objects.add(new Thing({ image: images["tree_2"], x: 2000, y: 400 }));
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_1"], x: -500, y: 1000 })
+  );
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_2"], x: 1700, y: 1200 })
+  );
+  game.objects.add(new Thing({ image: images["bush_1"], x: 600, y: 600 }));
+  game.objects.add(new Thing({ image: images["bush_2"], x: 1900, y: 1200 }));
+  game.objects.add(new Thing({ image: images["bush_3"], x: -400, y: 1000 }));
+  game.objects.add(new Thing({ image: images["bushes_1"], x: -500, y: 200 }));
+  game.objects.add(new Thing({ image: images["bushes_2"], x: 2100, y: 500 }));
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     const image = images[`child_${nr}`];
