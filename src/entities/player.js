@@ -1,26 +1,21 @@
-import GameObject from '../engine/game-object';
+import Person from './person';
 import Vector from '../engine/vector';
 
-export default class Player extends GameObject {
-  constructor({ x, y, image }) {
-    super({ x, y });
-    this.image = image;
-    this.velocity = new Vector(0, 0);
-    this.position = new Vector(x, y);
+export default class Player extends Person {
+  constructor({ x, y, image, origin }) {
+    super({ x, y, image, origin });
     this.movement = new Vector(0, 0);
-  }
-
-  draw(g) {
-    g.save();
-    g.context.translate(this.position.x, this.position.y);
-    g.context.scale(this.flipped ? -1 : 1, 1);
-    g.drawCenteredImage(this.image, 0, 0);
-    g.restore();
+    this.bobAngle = 0.05;
   }
 
   update(dt) {
+    super.update(dt);
     this.velocity.setV(this.movement.clone().multiply(100));
-    this.position.addV(this.velocity.clone().multiply(dt));
+
+    if (this.movement.x != 0 || this.movement.y != 0)
+      this.state = 'Walking';
+    else
+      this.state = 'Idle';
   }
 
   touch(other) {
