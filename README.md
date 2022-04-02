@@ -1,4 +1,4 @@
-# Playground Panice
+# Playground Panic
 
 The theme of Ludum Dare 50: Delay the inevitable
 
