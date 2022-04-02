@@ -106,7 +106,7 @@ function startGame(err) {
     next(g);
   });
 
-  const player = new Player({ x: 0, y: 0, image: images["test"] });
+  const player = new Player({ x: 0, y: 0, image: images["teacher"] });
   game.objects.add(player);
 
   game.objects.add(new Background({ image: images["stones"], game }));
