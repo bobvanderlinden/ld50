@@ -93,9 +93,6 @@ function startGame(err) {
   game.autoRefresh = new AutoRefresh({ game });
   // game.autoRefresh.enable();
 
-  // Camera
-  game.camera = new Camera({ game });
-
   // Touching
   game.touchSystem = new TouchSystem({ game, debug: false });
 
@@ -112,7 +109,7 @@ function startGame(err) {
     });
   }
 
-  game.chains.draw.insertBefore(drawBackground, game.chains.draw.camera);
+  game.chains.draw.insertBefore(drawBackground, game.chains.draw.objects);
 
   game.chains.draw.push((g, next) => {
     const objs = [...game.objects.lists.draw].sort(
@@ -157,23 +154,44 @@ function startGame(err) {
     );
   }
 
-  const player = new Player({ x: 0, y: 0, image: images["teacher"] });
+  const player = new Player({
+    x: game.width / 2,
+    y: 500,
+    image: images["teacher"],
+  });
   game.objects.add(player);
 
-  game.objects.add(new Thing({ image: images["school"], x: 900, y: -100 }));
-  game.objects.add(new Thing({ image: images["tree_1"], x: 500, y: 600 }));
-  game.objects.add(new Thing({ image: images["tree_2"], x: 2000, y: 400 }));
+  const a = new Vector(550, 460);
   game.objects.add(
-    new Thing({ image: images["tiny_tree_1"], x: -500, y: 1000 })
+    new Thing({ image: images["school"], x: 900 + a.x, y: -100 + a.y })
   );
   game.objects.add(
-    new Thing({ image: images["tiny_tree_2"], x: 1700, y: 1200 })
+    new Thing({ image: images["tree_1"], x: 500 + a.x, y: 600 + a.y })
   );
-  game.objects.add(new Thing({ image: images["bush_1"], x: 600, y: 600 }));
-  game.objects.add(new Thing({ image: images["bush_2"], x: 1900, y: 1200 }));
-  game.objects.add(new Thing({ image: images["bush_3"], x: -400, y: 1000 }));
-  game.objects.add(new Thing({ image: images["bushes_1"], x: -500, y: 200 }));
-  game.objects.add(new Thing({ image: images["bushes_2"], x: 2100, y: 500 }));
+  game.objects.add(
+    new Thing({ image: images["tree_2"], x: 2000 + a.x, y: 400 + a.y })
+  );
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_1"], x: -500 + a.x, y: 1000 + a.y })
+  );
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_2"], x: 1700 + a.x, y: 1200 + a.y })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_1"], x: 600 + a.x, y: 600 + a.y })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_2"], x: 1900 + a.x, y: 1200 + a.y })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_3"], x: -400 + a.x, y: 1000 + a.y })
+  );
+  game.objects.add(
+    new Thing({ image: images["bushes_1"], x: -500 + a.x, y: 200 + a.y })
+  );
+  game.objects.add(
+    new Thing({ image: images["bushes_2"], x: 2100 + a.x, y: 500 + a.y })
+  );
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     const image = images[`child_${nr}`];
