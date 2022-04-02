@@ -7,6 +7,7 @@ export default class Player extends GameObject {
     this.image = image;
     this.velocity = new Vector(0, 0);
     this.position = new Vector(x, y);
+    this.movement = new Vector(0, 0);
   }
 
   draw(g) {
@@ -18,6 +19,7 @@ export default class Player extends GameObject {
   }
 
   update(dt) {
+    this.velocity.setV(this.movement.clone().multiply(100));
     this.position.addV(this.velocity.clone().multiply(dt));
   }
 
