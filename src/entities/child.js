@@ -3,13 +3,16 @@ import { lerp } from "../engine/math";
 import Player from "./player";
 
 export default class Child extends Person {
+  kid = true;
   collisionRadius = 20;
+  bobAngle = 0.1;
+
   constructor({ x, y, image, exclamation, origin, getRandomPosition }) {
     super({ x, y, image, origin });
     this.exclamation = exclamation;
     this.time = lerp(1, 5, Math.random());
     this.getRandomPosition = getRandomPosition;
-    this.kid = true;
+    this.panic = false;
   }
 
   update(dt) {
