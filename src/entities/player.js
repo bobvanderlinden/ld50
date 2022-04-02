@@ -14,7 +14,7 @@ export default class Player extends Person {
 
   update(dt) {
     super.update(dt);
-    this.velocity.setV(this.movement.clone().multiply(100));
+    this.velocity.setV(this.movement.clone().multiply(300));
 
     if (this.movement.x != 0 || this.movement.y != 0) this.state = "Walking";
     else this.state = "Idle";
