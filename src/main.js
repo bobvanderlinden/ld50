@@ -17,6 +17,8 @@ import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
 import { handleCollision } from "./engine/physics.js";
+import Thing from "./entities/thing";
+import { lerp } from "./engine/math.js";
 
 let game;
 const rs = {
@@ -42,6 +44,9 @@ const rs = {
     "tiny_tree_2",
     "tree_1",
     "tree_2",
+    "seesaw",
+    "slide",
+    "swings",
   ],
 };
 
@@ -81,6 +86,7 @@ function startGame(err) {
   game.objects.lists.collidable = game.objects.createIndexList(
     "collisionRadius"
   );
+  game.objects.lists.kids = game.objects.createIndexList("kid");
 
   // function pickRandom(arr) {
   //   return arr[(arr.length * Math.random()) | 0];
@@ -138,16 +144,53 @@ function startGame(err) {
     next(g);
   });
 
+  game.chains.draw.push((g, next) => {
+    let panicOMeter = 0;
+    game.objects.lists.kids.each((k) => (panicOMeter += k.panic ? 1 : 0));
+    g.fillStyle("red");
+    g.font("50px Tahoma");
+    g.fillText(panicOMeter, 2300, -400);
+    next(g);
+  });
+
+  function getRandomPosition() {
+    return new Vector(
+      lerp(0, 2800, Math.random()),
+      lerp(500, 1575, Math.random())
+    );
+  }
+
   const player = new Player({ x: 0, y: 0, image: images["teacher"] });
   game.objects.add(player);
 
+  game.objects.add(new Thing({ image: images["school"], x: 900, y: -100 }));
+  game.objects.add(new Thing({ image: images["tree_1"], x: 500, y: 600 }));
+  game.objects.add(new Thing({ image: images["tree_2"], x: 2000, y: 400 }));
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_1"], x: -500, y: 1000 })
+  );
+  game.objects.add(
+    new Thing({ image: images["tiny_tree_2"], x: 1700, y: 1200 })
+  );
+  game.objects.add(new Thing({ image: images["bush_1"], x: 600, y: 600 }));
+  game.objects.add(new Thing({ image: images["bush_2"], x: 1900, y: 1200 }));
+  game.objects.add(new Thing({ image: images["bush_3"], x: -400, y: 1000 }));
+  game.objects.add(new Thing({ image: images["bushes_1"], x: -500, y: 200 }));
+  game.objects.add(new Thing({ image: images["bushes_2"], x: 2100, y: 500 }));
+  game.objects.add(new Thing({ image: images["seesaw"], x: 1400, y: 300 }));
+  game.objects.add(new Thing({ image: images["slide"], x: 300, y: 1200 }));
+  game.objects.add(new Thing({ image: images["swings"], x: 1200, y: 900 }));
+
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     const image = images[`child_${nr}`];
+    const position = getRandomPosition();
     game.objects.add(
       new Child({
         image,
-        x: nr * 100, y: 100,
-        origin: new Vector(image.width / 2, 0.9 * image.height)
+        x: position.x,
+        y: position.y,
+        origin: new Vector(image.width / 2, 0.9 * image.height),
+        getRandomPosition,
       })
     );
   }

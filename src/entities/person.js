@@ -5,7 +5,7 @@ import { lerp } from "../engine/math";
 export default class Person extends GameObject {
   constructor({ x, y, image, origin }) {
     super({ x, y });
-    if (!origin) origin = new Vector(image.width / 2, image.height);
+    if (!origin) origin = new Vector(image.width / 2, image.height - 10);
     this.origin = origin;
     this.image = image;
     this.velocity = new Vector(0, 0);
