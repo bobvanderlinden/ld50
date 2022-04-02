@@ -164,16 +164,18 @@ function startGame(err) {
   });
   game.objects.add(player);
 
-  function transform({ x, y }) {
-    return { x, y };
-  }
   game.objects.add(
-    new Thing({ image: images["school"], ...transform({ x: 900, y: -100 }) })
+    new Thing({ image: images["school"], x: 1400, y: 250,
+    collisionRadius: 100,
+    origin: new Vector(
+      images["school"].width / 2,
+      0.7 * images["school"].height
+    )})
   );
   game.objects.add(
     new Thing({
       image: images["tree_1"],
-      ...transform({ x: 500, y: 600 }),
+      x: 400, y: 1200,
       collisionRadius: 100,
       origin: new Vector(
         images["tree_1"].width / 2,
@@ -184,60 +186,89 @@ function startGame(err) {
   game.objects.add(
     new Thing({
       image: images["tree_2"],
-      ...transform({ x: 2000, y: 400 }),
-      collisionRadius: 120,
-    })
+      x: 2400, y: 700,
+      collisionRadius: 110,
+      origin: new Vector(
+        images["tree_2"].width / 2,
+        0.7 * images["tree_2"].height
+      )})
   );
   game.objects.add(
     new Thing({
       image: images["tiny_tree_1"],
-      ...transform({ x: -500, y: 1000 }),
-    })
+      x: 500, y: 550,
+      collisionRadius: 50,
+      origin: new Vector(
+        images["tiny_tree_1"].width / 2,
+        0.9 * images["tiny_tree_1"].height
+      )})
   );
   game.objects.add(
     new Thing({
       image: images["tiny_tree_2"],
-      ...transform({ x: 1700, y: 1200 }),
-    })
+      x: 2300, y: 1300,
+      collisionRadius: 50,
+      origin: new Vector(
+        images["tiny_tree_2"].width / 2,
+        0.9 * images["tiny_tree_2"].height
+      )})
   );
   game.objects.add(
-    new Thing({ image: images["bush_1"], ...transform({ x: 600, y: 600 }) })
+    new Thing({ image: images["bush_1"], x: 400, y: 600,
+    collisionRadius: 70,
+    origin: new Vector(
+      images["bush_1"].width / 2,
+      0.7 * images["bush_1"].height
+    )})
   );
   game.objects.add(
-    new Thing({ image: images["bush_2"], ...transform({ x: 1900, y: 1200 }) })
+    new Thing({ image: images["bush_2"], x: 2100, y: 1400,
+    collisionRadius: 50,
+    origin: new Vector(
+      images["bush_2"].width / 2,
+      0.7 * images["bush_2"].height
+    )})
   );
   game.objects.add(
-    new Thing({ image: images["bush_3"], ...transform({ x: -400, y: 1000 }) })
+    new Thing({ image: images["bush_3"], x: 600, y: 1250,
+    collisionRadius: 50,
+    origin: new Vector(
+      images["bush_3"].width / 2,
+      0.7 * images["bush_3"].height
+    )})
   );
   game.objects.add(
-    new Thing({ image: images["bushes_1"], ...transform({ x: -500, y: 200 }) })
+    new Thing({ image: images["bushes_1"], x: 1200, y: 800,
+    collisionRadius: 80,
+    origin: new Vector(
+      images["bushes_1"].width / 2,
+      0.7 * images["bushes_1"].height
+    )})
   );
+
   game.objects.add(
-    new Thing({ image: images["bushes_2"], ...transform({ x: 2100, y: 500 }) })
+    new Thing({ image: images["bushes_2"], x: 2500, y: 800,
+    collisionRadius: 80,
+    origin: new Vector(
+      images["bushes_2"].width / 2,
+      0.6 * images["bushes_2"].height
+    )})
   );
+
   game.objects.add(
-    new Thing({ image: images["bush_1"], ...transform({ x: 600, y: 600 }) })
+    new Thing({ image: images["seesaw"], x: 1500, y: 1200,
+    collisionRadius: 30,
+    origin: new Vector(
+      images["seesaw"].width / 2,
+      0.8 * images["seesaw"].height
+    )})
   );
-  game.objects.add(
-    new Thing({ image: images["bush_2"], ...transform({ x: 1900, y: 1200 }) })
-  );
-  game.objects.add(
-    new Thing({ image: images["bush_3"], ...transform({ x: -400, y: 1000 }) })
-  );
-  game.objects.add(
-    new Thing({ image: images["bushes_1"], ...transform({ x: -500, y: 200 }) })
-  );
-  game.objects.add(
-    new Thing({ image: images["bushes_2"], ...transform({ x: 2100, y: 500 }) })
-  );
-  game.objects.add(
-    new Thing({ image: images["seesaw"], ...transform({ x: 1400, y: 300 }) })
-  );
+
   game.objects.add(
     new Thing({
       image: images["slide"],
-      ...transform({ x: 300, y: 1200 }),
-      collisionRadius: 120,
+      x: 1800, y: 500,
+      collisionRadius: 70,
       origin: new Vector(
         images["slide"].width / 2,
         0.7 * images["slide"].height
@@ -245,7 +276,8 @@ function startGame(err) {
     })
   );
   game.objects.add(
-    new Thing({ image: images["swings"], ...transform({ x: 1200, y: 900 }) })
+    new Thing({ image: images["swings"], x: 700, y: 900,
+    collisionRadius: false})
   );
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
