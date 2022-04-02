@@ -1,4 +1,5 @@
 "use strict";
+
 import platform from "./engine/platform.js";
 import Game from "./engine/game.js";
 import state from "./engine/state.js";
@@ -16,8 +17,8 @@ import Player from "./entities/player";
 import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 
-var g, game;
-var rs = {
+let game;
+const rs = {
   audio: ["test"],
   images: [
     "test",
@@ -44,8 +45,8 @@ var rs = {
 };
 
 platform.once("load", () => {
-  var canvas = document.getElementById("main");
-  game = g = new Game(startGame, canvas, [
+  const canvas = document.getElementById("main");
+  game = new Game(startGame, canvas, [
     keyboard,
     resources(rs),
     state,
@@ -55,12 +56,12 @@ platform.once("load", () => {
 
   game.mouse = new Mouse({ game });
 
-  g.resources.status.on("changed", () => {
-    g.graphics.context.clearRect(0, 0, game.width, game.height);
-    g.graphics.context.fillStyle = "black";
-    g.graphics.context.font = "arial";
-    g.graphics.fillCenteredText(
-      `Preloading ${g.resources.status.ready} / ${g.resources.status.total}...`,
+  game.resources.status.on("changed", () => {
+    game.graphics.context.clearRect(0, 0, game.width, game.height);
+    game.graphics.context.fillStyle = "black";
+    game.graphics.context.font = "arial";
+    game.graphics.fillCenteredText(
+      `Preloading ${game.resources.status.ready} / ${game.resources.status.total}...`,
       400,
       300
     );
@@ -72,11 +73,11 @@ function startGame(err) {
     console.error(err);
   }
 
-  var images = g.resources.images;
-  // var audio = g.resources.audio;
-  g.objects.lists.player = g.objects.createIndexList("player");
-  g.objects.lists.draw = g.objects.createIndexList("draw");
-  g.objects.lists.update = g.objects.createIndexList("update");
+  const images = game.resources.images;
+  // var audio = game.resources.audio;
+  game.objects.lists.player = game.objects.createIndexList("player");
+  game.objects.lists.draw = game.objects.createIndexList("draw");
+  game.objects.lists.update = game.objects.createIndexList("update");
 
   // function pickRandom(arr) {
   //   return arr[(arr.length * Math.random()) | 0];
