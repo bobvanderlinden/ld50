@@ -1,18 +1,18 @@
 "use strict";
-import platform from "./platform.js";
-import Game from "./game.js";
-import Vector from "./vector.js";
-import state from "./state.js";
-import LevelSystem from "./levelsystem.js";
-import collision from "./collision.js";
-import keyboard from "./keyboard.js";
-import quake from "./quake.js";
-import resources from "./resources.js";
-import TouchSystem from "./touchsystem.js";
-import Camera from "./camera.js";
-import AutoRefresh from "./autorefresh.js";
-import Mouse from "./mouse.js";
-import EditorState from "./editorstate.js";
+import platform from "./engine/platform.js";
+import Game from "./engine/game.js";
+import state from "./engine/state.js";
+import LevelSystem from "./engine/levelsystem.js";
+import collision from "./engine/collision.js";
+import keyboard from "./engine/keyboard.js";
+import quake from "./engine/quake.js";
+import resources from "./engine/resources.js";
+import TouchSystem from "./engine/touchsystem.js";
+import Camera from "./engine/camera.js";
+import AutoRefresh from "./engine/autorefresh.js";
+import Mouse from "./engine/mouse.js";
+import EditorState from "./engine/editorstate.js";
+import Player from './entities/player';
 
 var rs = {
   audio: [
@@ -97,49 +97,6 @@ function startGame(err) {
 
   //#gameobjects
 
-  class GameObject {
-    constructor({ x, y }) {
-      this.position = new Vector(x, y);
-    }
-  }
-
-  class Start extends GameObject {
-    start = true;
-    export = true;
-    editorVisible = true;
-
-    drawForeground(g) {
-      g.drawCenteredImage(images.test, this.position.x, this.position.y);
-    }
-  }
-
-  class Player extends GameObject {
-    constructor({ x, y }) {
-      super({ x, y });
-      this.image = images["test"];
-      this.velocity = new Vector(0, 0);
-      this.position = new Vector(0, 0);
-    }
-
-    drawForeground(g) {
-      g.save();
-      g.context.translate(this.position.x, this.position.y);
-      g.context.scale(this.flipped ? -1 : 1, 1);
-      g.drawCenteredImage(this.image, 0, 0);
-      g.restore();
-    }
-
-    update(dt) {
-      this.flipped = moving ? direction < 0 : this.flipped;
-      this.velocity.x = this.velocity.x * 0.9 + direction * speed * 0.1;
-      this.velocity.y = this.sinkRate;
-      this.position.addV(this.velocity.clone().multiply(dt * slowStart));
-    }
-
-    touch(other) {
-    }
-  }
-
   class GameplayState {
     constructor({ game, player }) {
       this.game = game;
@@ -186,7 +143,7 @@ function startGame(err) {
   //   };
   // }
 
-  const player = new Player({ x: 0, y: 0 });
+  const player = new Player({ x: 0, y: 0, sprite: images["test"] });
   game.changeState(new GameplayState({ game, player }));
   game.start();
   window.game = game;
