@@ -72,18 +72,6 @@ function startGame(err) {
 
   game.levelSystem = new LevelSystem({ game });
 
-  function drawTiled(g, image, offset = 0) {
-    const screenHeight = game.height / game.camera.getPixelsPerMeter();
-    const screenTop = game.camera.y - screenHeight * 0.5;
-    const screenBottom = game.camera.y + screenHeight * 0.5;
-    const tilingTop =
-      (Math.floor(screenTop / image.height) - 1) * image.height +
-      (offset % image.height);
-    for (let y = tilingTop; y <= screenBottom; y += image.height) {
-      g.context.drawImage(image, 0, y);
-    }
-  }
-
   game.chains.draw.push((g, next) => {
     g.save();
     g.context.translate(-1024, 0);
@@ -96,37 +84,16 @@ function startGame(err) {
       game.height / game.camera.getPixelsPerMeter()
     );
 
-    drawTiled(g, images.background_2);
-    drawTiled(g, images.bubbles, game.time * -200);
-
-    g.drawCenteredImage(images["air"], 1024, -images["air"].height / 2 + 64);
-
     g.restore();
     next(g);
   });
 
   (function () {
     game.chains.draw.push((g, next) => {
-      for (const o of game.objects.lists.background) {
-        o.drawBackground(g);
-      }
-      for (const o of game.objects.lists.foreground) {
-        o.drawForeground(g);
-      }
+      // TODO: Draw!
       next(g);
     });
   })();
-
-  let ambientVolume = 0;
-  game.resources.audio.ambient.volume = 0;
-  game.chains.update.unshift((dt, next) => {
-    fadeAudio({
-      audio: game.resources.audio.ambient,
-      target: ambientVolume,
-      speed: (1 / 10) * dt,
-    });
-    next(dt);
-  });
 
   //#gameobjects
 
@@ -186,15 +153,9 @@ function startGame(err) {
       this.game.camera.reset();
       this.game.chains.update.push(this.update);
       this.game.on("keydown", this.keydown);
-
-      game.resources.audio.ambient.loop = true;
-      game.resources.audio.ambient.volume = 0;
-      game.resources.audio.ambient.play();
-      ambientVolume = 1;
     }
 
     disable() {
-      ambientVolume = 0;
       this.game.chains.update.remove(this.update);
       this.game.removeListener("keydown", this.keydown);
     }
