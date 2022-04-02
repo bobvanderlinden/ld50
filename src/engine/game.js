@@ -1,6 +1,7 @@
 import eventemitter from "./eventemitter.js";
 import ObjectManager from "./objectmanager.js";
 import Graphics from "./graphics.js";
+
 function chain(fs, next) {
   function call(i, args) {
     if (i < fs.length) {
