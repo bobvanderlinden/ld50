@@ -47,6 +47,7 @@ const rs = {
     "seesaw",
     "slide",
     "swings",
+    "exclamation",
   ],
 };
 
@@ -87,10 +88,6 @@ function startGame(err) {
     "collisionRadius"
   );
   game.objects.lists.kids = game.objects.createIndexList("kid");
-
-  // function pickRandom(arr) {
-  //   return arr[(arr.length * Math.random()) | 0];
-  // }
 
   // Auto-refresh
   game.autoRefresh = new AutoRefresh({ game });
@@ -234,6 +231,7 @@ function startGame(err) {
     game.objects.add(
       new Child({
         image,
+        exclamation: images["exclamation"],
         x: position.x,
         y: position.y,
         origin: new Vector(image.width / 2, 0.9 * image.height),

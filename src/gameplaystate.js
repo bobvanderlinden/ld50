@@ -1,9 +1,12 @@
+import { lerp, pickRandom } from "./engine/math";
+
 export default class GameplayState {
   constructor({ game, player }) {
     this.game = game;
     this.player = player;
     this.update = this.update.bind(this);
     this.keydown = this.keydown.bind(this);
+    this.resetPanicCountdown();
   }
 
   enable() {
@@ -27,6 +30,24 @@ export default class GameplayState {
     const y = sign(keys.s) - sign(keys.w);
     this.player.movement.set(x, y);
 
+    this.panicCountdown -= dt;
+    if (this.panicCountdown <= 0) {
+      this.panicChild();
+    }
+
     next(dt);
+  }
+
+  panicChild() {
+    const kids = [...this.game.objects.lists.kids];
+    const kid = pickRandom(kids);
+
+    kid.panic();
+
+    this.resetPanicCountdown();
+  }
+
+  resetPanicCountdown() {
+    this.panicCountdown = lerp(10, 15, Math.random());
   }
 }
