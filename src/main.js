@@ -13,6 +13,7 @@ import AutoRefresh from "./engine/autorefresh.js";
 import Mouse from "./engine/mouse.js";
 import EditorState from "./engine/editorstate.js";
 import Player from "./entities/player";
+import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 
 var g, game;
@@ -95,7 +96,7 @@ function startGame(err) {
 
   game.chains.draw.push((g, next) => {
     const objs = [...game.objects.lists.draw].sort(
-      (a, b) => b.position.y - a.position.y
+      (a, b) => a.position.y - b.position.y
     );
     for (const o of objs) {
       o.draw(g);
@@ -105,6 +106,12 @@ function startGame(err) {
 
   const player = new Player({ x: 0, y: 0, image: images["test"] });
   game.objects.add(player);
+
+  for (const nr of [1, 2, 3, 4, 5, 6]) {
+    game.objects.add(
+      new Child({ x: nr * 100, y: 100, image: images[`child_${nr}`] })
+    );
+  }
   game.changeState(new GameplayState({ game, player }));
   game.start();
   window.game = game;
