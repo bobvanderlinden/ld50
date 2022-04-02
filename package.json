@@ -1,0 +1,48 @@
+{
+  "name": "ld50",
+  "description": "A game for Ludum Dare 50",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "esbuild": "^0.11.13",
+    "eslint": "^7.25.0",
+    "prettier": "^2.2.1"
+  },
+  "scripts": {
+    "prettier": "prettier --write ./**/*.{html,js,css}",
+    "start": "esbuild main.js --serve --servedir=. --sourcemap --target=safari13 --bundle",
+    "build": "esbuild main.js --minify --bundle --sourcemap --target=safari13 --outdir=build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobvanderlinden/ld48.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bobvanderlinden/ld48/issues"
+  },
+  "homepage": "https://github.com/bobvanderlinden/ld48#readme",
+  "prettier": {},
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-unused-vars": [
+        "error",
+        {
+          "args": "none"
+        }
+      ]
+    }
+  }
+}
