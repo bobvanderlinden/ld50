@@ -10,7 +10,7 @@ export default class Thing extends GameObject {
     this.image = image;
     this.origin = origin;
     this.velocity = new Vector(0, 0);
-    this.collisionRadius = collisionRadius || 80;
+    if (collisionRadius !== false) this.collisionRadius = collisionRadius || 80;
   }
 
   draw(g) {
