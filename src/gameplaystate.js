@@ -4,7 +4,6 @@ export default class GameplayState {
     this.player = player;
     this.update = this.update.bind(this);
     this.keydown = this.keydown.bind(this);
-    this.pingtime = Math.floor(Math.random() * 15);
   }
 
   enable() {
@@ -21,12 +20,15 @@ export default class GameplayState {
   keydown(key) {
   }
 
-  update(dt) {
-    // Update camera
-    // this.game.camera.y = Math.min(
-    //   this.player.position.y,
-    //   end.bottom -
-    //     (this.game.height * 0.5) / this.game.camera.getPixelsPerMeter()
-    // );
+  update(dt, next) {
+    function sign(b) {
+      return b ? 1 : 0;
+    }
+    const keys = this.game.keys;
+    const x = sign(keys.d) - sign(keys.a);
+    const y = sign(keys.s) - sign(keys.w);
+    this.player.movement.set(x, y);
+
+    next(dt);
   }
 }

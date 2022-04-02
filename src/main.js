@@ -1,48 +1,67 @@
 "use strict";
+
 import platform from "./engine/platform.js";
 import Game from "./engine/game.js";
 import state from "./engine/state.js";
 import LevelSystem from "./engine/levelsystem.js";
 import collision from "./engine/collision.js";
 import keyboard from "./engine/keyboard.js";
-import quake from "./engine/quake.js";
 import resources from "./engine/resources.js";
 import TouchSystem from "./engine/touchsystem.js";
 import Camera from "./engine/camera.js";
 import AutoRefresh from "./engine/autorefresh.js";
 import Mouse from "./engine/mouse.js";
 import EditorState from "./engine/editorstate.js";
-import Player from './entities/player';
-import GameplayState from './state';
+import Player from "./entities/player";
+import Child from "./entities/child";
+import GameplayState from "./gameplaystate";
+import Vector from "./engine/vector";
+import { handleCollision } from "./engine/physics.js";
 
-var g, game;
-var rs = {
-  audio: [
-    "test",
-  ],
+let game;
+const rs = {
+  audio: ["test"],
   images: [
     "test",
+    "blurred_grass",
+    "bush_1",
+    "bush_2",
+    "bush_3",
+    "bushes_1",
+    "bushes_2",
+    "child_1",
+    "child_2",
+    "child_3",
+    "child_4",
+    "child_5",
+    "child_6",
+    "school",
+    "stones",
+    "teacher",
+    "tiny_tree_1",
+    "tiny_tree_2",
+    "tree_1",
+    "tree_2",
   ],
 };
 
 platform.once("load", () => {
-  var canvas = document.getElementById("main");
-  game = g = new Game(startGame, canvas, [
+  const canvas = document.getElementById("main");
+  game = new Game(startGame, canvas, [
     keyboard,
     resources(rs),
     state,
     collision,
-    quake,
   ]);
 
   game.mouse = new Mouse({ game });
 
-  g.resources.status.on("changed", () => {
-    g.graphics.context.clearRect(0, 0, game.width, game.height);
-    g.graphics.context.fillStyle = "black";
-    g.graphics.context.font = "arial";
-    g.graphics.fillCenteredText(
-      `Preloading ${g.resources.status.ready} / ${g.resources.status.total}...`,
+  game.resources.status.on("changed", () => {
+    game.graphics.context.clearRect(0, 0, game.width, game.height);
+    game.graphics.context.fillStyle = "black";
+    game.graphics.context.font = "arial";
+    game.graphics.fillCenteredText(
+      `Preloading ${game.resources.status.ready} / ${game.resources.status.total}...`,
       400,
       300
     );
@@ -54,9 +73,14 @@ function startGame(err) {
     console.error(err);
   }
 
-  var images = g.resources.images;
-  // var audio = g.resources.audio;
-  g.objects.lists.player = g.objects.createIndexList("player");
+  const images = game.resources.images;
+  // var audio = game.resources.audio;
+  game.objects.lists.player = game.objects.createIndexList("player");
+  game.objects.lists.draw = game.objects.createIndexList("draw");
+  game.objects.lists.update = game.objects.createIndexList("update");
+  game.objects.lists.collidable = game.objects.createIndexList(
+    "collisionRadius"
+  );
 
   // function pickRandom(arr) {
   //   return arr[(arr.length * Math.random()) | 0];
@@ -74,30 +98,59 @@ function startGame(err) {
 
   game.levelSystem = new LevelSystem({ game });
 
+  function drawBackground(g, next) {
+    g.fillStyle("lightgray");
+    g.fillRectangle(0, 0, game.width, game.height);
+    const scaling = game.width / 2800;
+    g.scale(0, 0, scaling, scaling, () => {
+      g.drawImage(images["stones"], 0, 0);
+      g.drawImage(images["blurred_grass"], 0, 0);
+      next(g);
+    });
+  }
+
+  game.chains.draw.insertBefore(drawBackground, game.chains.draw.camera);
+
   game.chains.draw.push((g, next) => {
-    g.save();
-    g.context.translate(-1024, 0);
-
-    g.context.fillStyle = "#0fb0fe";
-    g.context.fillRect(
-      0,
-      game.camera.y - (game.height / game.camera.getPixelsPerMeter()) * 0.5,
-      2048,
-      game.height / game.camera.getPixelsPerMeter()
+    const objs = [...game.objects.lists.draw].sort(
+      (a, b) => a.position.y - b.position.y
     );
-
-    g.restore();
+    for (const o of objs) {
+      o.draw(g);
+    }
     next(g);
   });
 
-  (function () {
-    game.chains.draw.push((g, next) => {
-      // TODO: Draw!
-      next(g);
-    });
-  })();
+  game.chains.update.push((dt, next) => {
+    handleCollision([...game.objects.lists.collidable], []);
+    next(dt);
+  });
 
-  const player = new Player({ x: 0, y: 0, sprite: images["test"] });
+  game.chains.draw.push((g, next) => {
+    g.strokeStyle("red");
+    for (const collidable of game.objects.lists.collidable) {
+      g.strokeCircle(
+        collidable.position.x,
+        collidable.position.y,
+        collidable.collisionRadius
+      );
+    }
+    next(g);
+  });
+
+  const player = new Player({ x: 0, y: 0, image: images["teacher"] });
+  game.objects.add(player);
+
+  for (const nr of [1, 2, 3, 4, 5, 6]) {
+    const image = images[`child_${nr}`];
+    game.objects.add(
+      new Child({
+        image,
+        x: nr * 100, y: 100,
+        origin: new Vector(image.width / 2, 0.9 * image.height)
+      })
+    );
+  }
   game.changeState(new GameplayState({ game, player }));
   game.start();
   window.game = game;
