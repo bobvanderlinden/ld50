@@ -13,7 +13,7 @@ import AutoRefresh from "./engine/autorefresh.js";
 import Mouse from "./engine/mouse.js";
 import EditorState from "./engine/editorstate.js";
 import Player from './entities/player';
-import GameplayState from './state';
+import GameplayState from './gameplaystate';
 
 var g, game;
 var rs = {
