@@ -96,9 +96,6 @@ function startGame(err) {
   game.autoRefresh = new AutoRefresh({ game });
   // game.autoRefresh.enable();
 
-  // Camera
-  game.camera = new Camera({ game });
-
   // Touching
   game.touchSystem = new TouchSystem({ game, debug: false });
 
@@ -115,7 +112,7 @@ function startGame(err) {
     });
   }
 
-  game.chains.draw.insertBefore(drawBackground, game.chains.draw.camera);
+  game.chains.draw.insertBefore(drawBackground, game.chains.draw.objects);
 
   game.chains.draw.push((g, next) => {
     const objs = [...game.objects.lists.draw].sort(
@@ -160,26 +157,96 @@ function startGame(err) {
     );
   }
 
-  const player = new Player({ x: 0, y: 0, image: images["teacher"] });
+  const player = new Player({
+    x: game.width / 2,
+    y: 500,
+    image: images["teacher"],
+  });
   game.objects.add(player);
 
-  game.objects.add(new Thing({ image: images["school"], x: 900, y: -100 }));
-  game.objects.add(new Thing({ image: images["tree_1"], x: 500, y: 600 }));
-  game.objects.add(new Thing({ image: images["tree_2"], x: 2000, y: 400 }));
+  function transform({ x, y }) {
+    return { x, y };
+  }
   game.objects.add(
-    new Thing({ image: images["tiny_tree_1"], x: -500, y: 1000 })
+    new Thing({ image: images["school"], ...transform({ x: 900, y: -100 }) })
   );
   game.objects.add(
-    new Thing({ image: images["tiny_tree_2"], x: 1700, y: 1200 })
+    new Thing({
+      image: images["tree_1"],
+      ...transform({ x: 500, y: 600 }),
+      collisionRadius: 100,
+      origin: new Vector(
+        images["tree_1"].width / 2,
+        0.7 * images["tree_1"].height
+      ),
+    })
   );
-  game.objects.add(new Thing({ image: images["bush_1"], x: 600, y: 600 }));
-  game.objects.add(new Thing({ image: images["bush_2"], x: 1900, y: 1200 }));
-  game.objects.add(new Thing({ image: images["bush_3"], x: -400, y: 1000 }));
-  game.objects.add(new Thing({ image: images["bushes_1"], x: -500, y: 200 }));
-  game.objects.add(new Thing({ image: images["bushes_2"], x: 2100, y: 500 }));
-  game.objects.add(new Thing({ image: images["seesaw"], x: 1400, y: 300 }));
-  game.objects.add(new Thing({ image: images["slide"], x: 300, y: 1200 }));
-  game.objects.add(new Thing({ image: images["swings"], x: 1200, y: 900 }));
+  game.objects.add(
+    new Thing({
+      image: images["tree_2"],
+      ...transform({ x: 2000, y: 400 }),
+      collisionRadius: 120,
+    })
+  );
+  game.objects.add(
+    new Thing({
+      image: images["tiny_tree_1"],
+      ...transform({ x: -500, y: 1000 }),
+    })
+  );
+  game.objects.add(
+    new Thing({
+      image: images["tiny_tree_2"],
+      ...transform({ x: 1700, y: 1200 }),
+    })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_1"], ...transform({ x: 600, y: 600 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_2"], ...transform({ x: 1900, y: 1200 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_3"], ...transform({ x: -400, y: 1000 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bushes_1"], ...transform({ x: -500, y: 200 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bushes_2"], ...transform({ x: 2100, y: 500 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_1"], ...transform({ x: 600, y: 600 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_2"], ...transform({ x: 1900, y: 1200 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bush_3"], ...transform({ x: -400, y: 1000 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bushes_1"], ...transform({ x: -500, y: 200 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["bushes_2"], ...transform({ x: 2100, y: 500 }) })
+  );
+  game.objects.add(
+    new Thing({ image: images["seesaw"], ...transform({ x: 1400, y: 300 }) })
+  );
+  game.objects.add(
+    new Thing({
+      image: images["slide"],
+      ...transform({ x: 300, y: 1200 }),
+      collisionRadius: 120,
+      origin: new Vector(
+        images["slide"].width / 2,
+        0.7 * images["slide"].height
+      ),
+    })
+  );
+  game.objects.add(
+    new Thing({ image: images["swings"], ...transform({ x: 1200, y: 900 }) })
+  );
 
   for (const nr of [1, 2, 3, 4, 5, 6]) {
     const image = images[`child_${nr}`];

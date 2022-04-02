@@ -7,7 +7,6 @@ export default class GameplayState {
   }
 
   enable() {
-    this.game.camera.reset();
     this.game.chains.update.push(this.update);
     this.game.on("keydown", this.keydown);
   }
@@ -17,8 +16,7 @@ export default class GameplayState {
     this.game.removeListener("keydown", this.keydown);
   }
 
-  keydown(key) {
-  }
+  keydown(key) {}
 
   update(dt, next) {
     function sign(b) {
