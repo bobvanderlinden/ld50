@@ -14,7 +14,6 @@ export default class Child extends Person {
     this.exclamation = exclamation;
     this.time = lerp(1, 5, Math.random());
     this.getRandomPosition = getRandomPosition;
-    this.panic = false;
   }
 
   update(dt) {

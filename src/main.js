@@ -143,7 +143,9 @@ function startGame(err) {
   game.chains.draw.push((g, next) => {
     // Get amount of panic
     let panicOMeter = 0;
-    game.objects.lists.kids.each((k) => (panicOMeter += k.panic ? 1 : 0));
+    game.objects.lists.kids.each(
+      (k) => (panicOMeter += k.state == "Panic" ? 1 : 0)
+    );
     if (panicOMeter > panicOMeterValue) panicOMeterValue += 0.01;
     if (panicOMeter < panicOMeterValue) panicOMeterValue -= 0.01;
 
