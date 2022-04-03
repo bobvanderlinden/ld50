@@ -19,13 +19,13 @@ export function createBox(points) {
 export function getLineCollisions(o, radius, lineSegments, collisions) {
   for (var i = 0; i < lineSegments.length; i++) {
     var lineSegment = lineSegments[i];
-    if (lineSegment.normal.dot(o.vx, o.vy) > 0) {
+    if (lineSegment.normal.dot(o.velocity.x, o.velocity.y) > 0) {
       continue;
     }
     t.setV(lineSegment.normal);
     t.normalRight();
     var l = lineSegment.start.distanceToV(lineSegment.end);
-    t2.set(o.x, o.y);
+    t2.set(o.position.x, o.position.y);
     t2.substractV(lineSegment.start);
     var offY = lineSegment.normal.dotV(t2) - radius;
     var offX = t.dotV(t2);
@@ -41,9 +41,9 @@ export function getLineCollisions(o, radius, lineSegments, collisions) {
           offset: offY,
         });
       } else if (offX < 0 && offX > -radius) {
-        d = lineSegment.start.distanceTo(o.x, o.y);
+        d = lineSegment.start.distanceTo(o.position.x, o.position.y);
         if (d < radius) {
-          t.set(o.x, o.y);
+          t.set(o.position.x, o.position.y);
           t.substractV(lineSegment.start);
           t.normalize();
           collisions.push({
@@ -53,9 +53,9 @@ export function getLineCollisions(o, radius, lineSegments, collisions) {
           });
         }
       } else if (offX > l && offX < l + radius) {
-        d = lineSegment.end.distanceTo(o.x, o.y);
+        d = lineSegment.end.distanceTo(o.position.x, o.position.y);
         if (d < radius) {
-          t.set(o.x, o.y);
+          t.set(o.position.x, o.position.y);
           t.substractV(lineSegment.end);
           t.normalize();
           collisions.push({

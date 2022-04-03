@@ -13,20 +13,17 @@ import Mouse from "./engine/mouse.js";
 import Player from "./entities/player";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
-import { handleCollision } from "./engine/physics.js";
+import { createBox, handleCollision } from "./engine/physics.js";
 import { lerp } from "./engine/math.js";
 import FailState from "./failstate.js";
 import Level1 from "./levels/level1";
 import SuccessState from "./successstate.js";
 import Camera from "./engine/camera.js";
+import LineSegment from "./engine/linesegment.js";
 
 let game;
 const rs = {
-  audio: [
-    "test",
-    "bell",
-    "fail",
-  ],
+  audio: ["test", "bell", "fail"],
   images: [
     "test",
     "blurred_grass",
@@ -139,8 +136,15 @@ function startGame(err) {
     next(g);
   });
 
+  const worldBoundaries = createBox([
+    new Vector(0, 390),
+    new Vector(0, 1600),
+    new Vector(2800, 1600),
+    new Vector(2800, 336),
+  ]);
+
   game.chains.update.push((dt, next) => {
-    handleCollision([...game.objects.lists.collidable], []);
+    handleCollision([...game.objects.lists.collidable], worldBoundaries);
     next(dt);
   });
 
