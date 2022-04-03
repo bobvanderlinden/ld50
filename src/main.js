@@ -208,16 +208,14 @@ function startGame(err) {
           game,
           player,
           onNext: () => {
-            game.levelSystem.nextLevel();
+            game.levelSystem.changeLevel(Level1({ game }));
             onStart();
           },
         })
       );
     }
-    
   }
 
-  // onStart();
   game.changeState(
     new StartState({
       game,
