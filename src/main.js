@@ -25,7 +25,11 @@ import SuccessState from "./successstate.js";
 
 let game;
 const rs = {
-  audio: ["test"],
+  audio: [
+    "test",
+    "bell",
+    "fail",
+  ],
   images: [
     "test",
     "blurred_grass",

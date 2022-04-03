@@ -15,6 +15,7 @@ export default class GameplayState {
   }
 
   enable() {
+    this.game.resources.audio.bell.play();
     this.game.chains.update.push(this.update);
     this.game.chains.draw.push(this.draw);
     this.game.on("keydown", this.keydown);
@@ -33,6 +34,9 @@ export default class GameplayState {
     this.updatePanicKids(dt);
     this.updatePanicOMeter(dt);
     this.time -= dt;
+    if (this.time <= 1.8) {
+      this.game.resources.audio.bell.play();
+    }
     if (this.time <= 0) {
       this.onSuccess();
     }
