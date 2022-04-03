@@ -76,6 +76,13 @@ platform.once("load", () => {
 
   game.mouse = new Mouse({ game, debug: false });
 
+  const music = document.createElement("audio");
+  music.autoplay = true;
+  music.loop = true;
+  music.src = "assets/music.mp3";
+  document.body.appendChild(music);
+  game.music = music;
+
   game.resources.status.on("changed", () => {
     game.graphics.context.clearRect(0, 0, game.width, game.height);
     game.graphics.context.fillStyle = "rgba(255,255,255,0.5)";
