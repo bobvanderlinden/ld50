@@ -1,17 +1,15 @@
 import CommonObjects from "./commonobjects";
 import Kids from "./kids";
-import Level4 from "./level4";
 
-export default function Level3({ game }) {
+export default function Level5({ game }) {
 
-  let amount = 15;
+  let amount = 50;
 
   return {
     objects: [
       ...CommonObjects({game}),
       ...Kids({game, amount}),
     ],
-    nextLevel: Level4,
-    clone: Level3,
+    clone: Level5,
   };
 }
