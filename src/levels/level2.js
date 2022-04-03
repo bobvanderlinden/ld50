@@ -1,9 +1,9 @@
 import Vector from "../engine/vector";
 import Child from "../entities/child";
 import CommonObjects from "./commonobjects";
-import Level2 from './level2';
+import Level3 from './level3';
 
-export default function Level1({ game }) {
+export default function Level2({ game }) {
   const images = game.resources.images;
 
   const kids = [];
@@ -28,7 +28,7 @@ export default function Level1({ game }) {
       ...CommonObjects({game}),
       ...kids,
     ],
-    nextLevel: Level2,
-    clone: Level1,
+    nextLevel: Level3,
+    clone: Level2,
   };
 }
