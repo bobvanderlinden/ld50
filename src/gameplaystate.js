@@ -50,7 +50,7 @@ export default class GameplayState {
     const keys = this.game.keys;
     const x = sign(keys.d) - sign(keys.a);
     const y = sign(keys.s) - sign(keys.w);
-    this.player.movement.set(x, y);
+    this.player.movement.set(x, y).normalizeOrZero();
   }
 
   updatePanicKids(dt) {
@@ -104,7 +104,7 @@ export default class GameplayState {
     g.rotate(
       2400,
       250,
-      lerp(-0.9 * Math.PI, -0.1 * Math.PI, this.panicOMeterValue),
+      lerp(-1 * Math.PI, -0.01 * Math.PI, this.panicOMeterValue),
       () => {
         g.drawCenteredImage(needle, 2400, 250);
       }
