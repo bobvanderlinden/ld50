@@ -2,7 +2,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
 }
 
@@ -11,7 +12,7 @@ body {
   font-family: "Freckle Face", cursive;
   font-size: 15px;
   background-color: #36096d;
-  background-image: linear-gradient(315deg, #36096d 0%, #c437d6 74%);
+  background-image: linear-gradient(0deg, #04450e 0%, #097415 74%);
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
