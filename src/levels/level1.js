@@ -26,6 +26,7 @@ export default function Level1({ game }) {
   }
 
   return {
+    panicRate: 4,
     objects: [...CommonObjects({ game }), ...kids],
     nextLevel: Level2,
     clone: Level1,

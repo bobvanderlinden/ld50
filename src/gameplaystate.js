@@ -123,6 +123,9 @@ export default class GameplayState {
   }
 
   resetPanicCountdown() {
-    this.panicCountdown = lerp(3, 5, Math.random());
+    const panicRate = this.game.levelSystem.level.panicRate ?? 4;
+    const min = panicRate - 1;
+    const max = panicRate + 1;
+    this.panicCountdown = lerp(min, max, Math.random());
   }
 }
