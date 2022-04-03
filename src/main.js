@@ -20,7 +20,7 @@ import Level1 from "./levels/level1";
 import SuccessState from "./successstate.js";
 import EndState from "./endstate.js";
 import Camera from "./engine/camera.js";
-import LineSegment from "./engine/linesegment.js";
+import StartState from "./startstate.js";
 
 let game;
 const rs = {
@@ -60,6 +60,8 @@ const rs = {
     "clock_hand",
     "clock_stripes",
     "end",
+    "start",
+    "info",
   ],
 };
 
@@ -97,9 +99,8 @@ function startGame(err) {
   game.objects.lists.player = game.objects.createIndexList("player");
   game.objects.lists.draw = game.objects.createIndexList("draw");
   game.objects.lists.update = game.objects.createIndexList("update");
-  game.objects.lists.collidable = game.objects.createIndexList(
-    "collisionRadius"
-  );
+  game.objects.lists.collidable =
+    game.objects.createIndexList("collisionRadius");
   game.objects.lists.kids = game.objects.createIndexList("kid");
 
   // Auto-refresh
@@ -208,8 +209,16 @@ function startGame(err) {
     }
   }
 
-  game.levelSystem.changeLevel(Level1({ game }));
-  onStart();
+  // onStart();
+  game.changeState(
+    new StartState({
+      game,
+      onNext: () => {
+        game.levelSystem.changeLevel(Level1({ game }));
+        onStart();
+      },
+    })
+  );
 
   game.start();
   window.game = game;
