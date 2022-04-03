@@ -31,8 +31,12 @@ export default class Child extends Person {
     } else if (this.state === "Idle") {
       this.velocity.set(0, 0);
     } else if (this.state === "Panic") {
-      this.velocity.set(0, 0);
-      this.angle = 0;
+      const direction =
+        this.velocity.length2() === 0
+          ? new Vector(1, 0).rotate(Math.PI * 2 * Math.random())
+          : this.velocity.clone().normalize();
+      this.velocity.setV(direction).multiply(200);
+      this.updateBobbing(dt, this.bobRate / 3);
     }
     if (this.time > 0) return;
     this[`transitionFrom${this.state}`]();

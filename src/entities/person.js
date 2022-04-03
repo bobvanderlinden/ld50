@@ -39,10 +39,14 @@ export default class Person extends GameObject {
         this.angle = 0;
         break;
       case "Walking": {
-        const bobState = this.animationTime % (this.bobRate * 2) > this.bobRate;
-        this.angle = bobState ? -this.bobAngle : this.bobAngle;
+        this.updateBobbing(dt);
         break;
       }
     }
+  }
+
+  updateBobbing(dt, bobRate = this.bobRate, bobAngle = this.bobAngle) {
+    const bobState = this.animationTime % (bobRate * 2) > bobRate;
+    this.angle = bobState ? -bobAngle : bobAngle;
   }
 }
