@@ -28,14 +28,14 @@ class LevelSystem {
     this.game.emit("levelchanged");
   }
   restartLevel() {
-    this.changeLevel(this.level.clone());
+    this.changeLevel(this.level.clone({ game: this.game }));
   }
   hasNextLevel(level) {
     const _level = level || this.level;
     return _level && _level.nextLevel;
   }
   nextLevel(level) {
-    const nextLevel = (level || this.level).nextLevel();
+    const nextLevel = (level || this.level).nextLevel({ game: this.game });
     this.changeLevel(nextLevel);
   }
 }

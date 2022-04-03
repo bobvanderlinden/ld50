@@ -8,20 +8,16 @@ import collision from "./engine/collision.js";
 import keyboard from "./engine/keyboard.js";
 import resources from "./engine/resources.js";
 import TouchSystem from "./engine/touchsystem.js";
-import Camera from "./engine/camera.js";
 import AutoRefresh from "./engine/autorefresh.js";
 import Mouse from "./engine/mouse.js";
-import EditorState from "./engine/editorstate.js";
 import Player from "./entities/player";
-import Child from "./entities/child";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
 import { handleCollision } from "./engine/physics.js";
-import Thing from "./entities/thing";
 import { lerp } from "./engine/math.js";
 import FailState from "./failstate.js";
+import Level1 from "./levels/level1";
 import SuccessState from "./successstate.js";
-
 
 let game;
 const rs = {
@@ -97,6 +93,7 @@ function startGame(err) {
 
   const images = game.resources.images;
   // var audio = game.resources.audio;
+  game.objects.lists.start = game.objects.createIndexList("start");
   game.objects.lists.player = game.objects.createIndexList("player");
   game.objects.lists.draw = game.objects.createIndexList("draw");
   game.objects.lists.update = game.objects.createIndexList("update");
@@ -156,204 +153,59 @@ function startGame(err) {
   //   next(g);
   // });
 
-  function getRandomPosition() {
+  game.getRandomPosition = function getRandomPosition() {
     return new Vector(
       lerp(0, 2800, Math.random()),
       lerp(500, 1575, Math.random())
     );
-  }
+  };
 
-  const player = new Player({
-    x: game.width / 2,
-    y: 500,
-    image: images["teacher"],
+  let player;
+
+  game.on("levelchanged", () => {
+    // Spawn player on start object.
+    for (const start of game.objects.lists.start) {
+      player = new Player({
+        x: start.position.x,
+        y: start.position.y,
+        image: images["teacher"],
+      });
+      game.objects.add(player);
+      break;
+    }
   });
-  game.objects.add(player);
-
-  game.objects.add(
-    new Thing({
-      image: images["school"],
-      x: 1400,
-      y: 250,
-      collisionRadius: 100,
-      origin: new Vector(
-        images["school"].width / 2,
-        0.7 * images["school"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["tree_1"],
-      x: 400,
-      y: 1200,
-      collisionRadius: 100,
-      origin: new Vector(
-        images["tree_1"].width / 2,
-        0.7 * images["tree_1"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["tree_2"],
-      x: 2400,
-      y: 700,
-      collisionRadius: 110,
-      origin: new Vector(
-        images["tree_2"].width / 2,
-        0.7 * images["tree_2"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["tiny_tree_1"],
-      x: 500,
-      y: 550,
-      collisionRadius: 50,
-      origin: new Vector(
-        images["tiny_tree_1"].width / 2,
-        0.9 * images["tiny_tree_1"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["tiny_tree_2"],
-      x: 2300,
-      y: 1300,
-      collisionRadius: 50,
-      origin: new Vector(
-        images["tiny_tree_2"].width / 2,
-        0.9 * images["tiny_tree_2"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["bush_1"],
-      x: 400,
-      y: 600,
-      collisionRadius: 70,
-      origin: new Vector(
-        images["bush_1"].width / 2,
-        0.7 * images["bush_1"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["bush_2"],
-      x: 2100,
-      y: 1400,
-      collisionRadius: 50,
-      origin: new Vector(
-        images["bush_2"].width / 2,
-        0.7 * images["bush_2"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["bush_3"],
-      x: 600,
-      y: 1250,
-      collisionRadius: 50,
-      origin: new Vector(
-        images["bush_3"].width / 2,
-        0.7 * images["bush_3"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["bushes_1"],
-      x: 1200,
-      y: 800,
-      collisionRadius: 80,
-      origin: new Vector(
-        images["bushes_1"].width / 2,
-        0.7 * images["bushes_1"].height
-      ),
-    })
-  );
-
-  game.objects.add(
-    new Thing({
-      image: images["bushes_2"],
-      x: 2500,
-      y: 800,
-      collisionRadius: 80,
-      origin: new Vector(
-        images["bushes_2"].width / 2,
-        0.6 * images["bushes_2"].height
-      ),
-    })
-  );
-
-  game.objects.add(
-    new Thing({
-      image: images["seesaw"],
-      x: 1500,
-      y: 1200,
-      collisionRadius: 30,
-      origin: new Vector(
-        images["seesaw"].width / 2,
-        0.8 * images["seesaw"].height
-      ),
-    })
-  );
-
-  game.objects.add(
-    new Thing({
-      image: images["slide"],
-      x: 1800,
-      y: 500,
-      collisionRadius: 70,
-      origin: new Vector(
-        images["slide"].width / 2,
-        0.7 * images["slide"].height
-      ),
-    })
-  );
-  game.objects.add(
-    new Thing({
-      image: images["swings"],
-      x: 700,
-      y: 900,
-      collisionRadius: false,
-    })
-  );
-
-  for (const nr of [1, 2, 3, 4, 5, 6]) {
-    const image = images[`child_${nr}`];
-    const position = getRandomPosition();
-    game.objects.add(
-      new Child({
-        image,
-        exclamation: images["exclamation"],
-        tears: [images.tears_1, images.tears_2],
-        x: position.x,
-        y: position.y,
-        origin: new Vector(image.width / 2, 0.9 * image.height),
-        getRandomPosition,
-      })
-    );
-  }
 
   function onStart() {
     game.changeState(new GameplayState({ game, player, onFail, onSuccess }));
   }
 
   function onFail() {
-    game.changeState(new FailState({ game, player, onNext: onStart }));
+    game.changeState(
+      new FailState({
+        game,
+        player,
+        onNext: () => {
+          game.levelSystem.restartLevel();
+          onStart();
+        },
+      })
+    );
   }
 
   function onSuccess() {
-    game.changeState(new SuccessState({ game, player, onNext: onStart }));
+    game.changeState(
+      new SuccessState({
+        game,
+        player,
+        onNext: () => {
+          game.levelSystem.nextLevel();
+          onStart();
+        },
+      })
+    );
   }
 
+  game.levelSystem.changeLevel(Level1({ game }));
   onStart();
 
   game.start();
