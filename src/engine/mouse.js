@@ -24,7 +24,11 @@ class Mouse extends Vector {
     );
 
     if (debug) {
-      game.chains.draw.push(this.drawDebug);
+      this.drawScreen = this.drawScreen.bind(this);
+      this.drawWorld = this.drawWorld.bind(this);
+
+      game.chains.draw.push(this.drawWorld);
+      game.chains.draw.unshift(this.drawScreen);
     }
   }
 
@@ -83,11 +87,23 @@ class Mouse extends Vector {
     this.game.emit("mousewheel", -event.detail);
   }
 
-  drawDebug(g, next) {
-    g.fillStyle(this.buttons.length ? "red" : "blue");
+  drawScreen(g, next) {
+    next(g);
+    g.strokeStyle("blue");
+    g.strokeCross(this.x, this.y, 20);
+
     const worldPos = new Vector();
     this.game.camera.screenToWorld(this, worldPos);
-    g.fillCircle(worldPos.x, worldPos.y, 20);
+    g.fillStyle("blue");
+    g.fillText(`${this.x | 0}, ${this.y | 0}`, this.x, this.y);
+    g.fillText(`${worldPos.x | 0}, ${worldPos.y | 0}`, this.x, this.y - 10);
+  }
+
+  drawWorld(g, next) {
+    g.strokeStyle(this.buttons.length ? "red" : "blue");
+    const worldPos = new Vector();
+    this.game.camera.screenToWorld(this, worldPos);
+    g.strokePlus(worldPos.x, worldPos.y, 20);
 
     next(g);
   }
