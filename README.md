@@ -29,9 +29,8 @@ npm start
 
 ## Credits
 
-- [@bobvanderlinden](https://github.com/bobvanderlinden/) (Lead programmer A)
-- [@minthamie](https://github.com/minthamie/) (Art)
+- [@bobvanderlinden](https://github.com/bobvanderlinden/) (Lead programmer A, Sound Engineer)
+- [@minthamie](https://github.com/minthamie/) (Art, Programmer, Sound Engineer)
 - [@mirandavdende](https://github.com/mirandavdende) (Story teller)
 - [@nickschot](https://github.com/nickschot/) (Brainstorm)
-- [@srekke](https://github.com/srekke) (Music)
 - [@timendus](https://github.com/timendus) (Lead programmer 1)
