@@ -111,6 +111,7 @@ platform.once("load", () => {
   music.autoplay = true;
   music.loop = true;
   music.src = "assets/music.mp3";
+  music.volume = 0.7;
   document.body.appendChild(music);
   game.music = music;
 
