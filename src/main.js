@@ -57,6 +57,9 @@ const rs = {
     "tears_1",
     "tears_2",
     "next_level",
+    "clock_background",
+    "clock_hand",
+    "clock_stripes",
   ],
 };
 
