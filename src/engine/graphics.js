@@ -81,8 +81,8 @@ export default class Graphics {
 
   fillLoading(x, y, radius, fraction) {
     var c = this.context;
-    var abegin = (fraction * 360 - 90) * (Math.PI / 180);
-    var aend = (0 - 90) * (Math.PI / 180);
+    var aend = (fraction * 360 - 90) * (Math.PI / 180);
+    var abegin = (0 - 90) * (Math.PI / 180);
 
     c.beginPath();
     c.moveTo(x, y);

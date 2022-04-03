@@ -22,7 +22,11 @@ import Camera from "./engine/camera.js";
 
 let game;
 const rs = {
-  audio: ["test"],
+  audio: [
+    "test",
+    "bell",
+    "fail",
+  ],
   images: [
     "test",
     "blurred_grass",
@@ -54,6 +58,9 @@ const rs = {
     "tears_1",
     "tears_2",
     "next_level",
+    "clock_background",
+    "clock_hand",
+    "clock_stripes",
   ],
 };
 
