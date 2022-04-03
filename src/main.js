@@ -18,6 +18,7 @@ import { lerp } from "./engine/math.js";
 import FailState from "./failstate.js";
 import Level1 from "./levels/level1";
 import SuccessState from "./successstate.js";
+import EndState from "./endstate.js";
 import Camera from "./engine/camera.js";
 import LineSegment from "./engine/linesegment.js";
 
@@ -58,6 +59,7 @@ const rs = {
     "clock_background",
     "clock_hand",
     "clock_stripes",
+    "end",
   ],
 };
 
@@ -188,16 +190,30 @@ function startGame(err) {
   }
 
   function onSuccess() {
-    game.changeState(
-      new SuccessState({
-        game,
-        player,
-        onNext: () => {
-          game.levelSystem.nextLevel();
-          onStart();
-        },
-      })
-    );
+    if (game.levelSystem.hasNextLevel()) {
+      game.changeState(
+        new SuccessState({
+          game,
+          player,
+          onNext: () => {
+            game.levelSystem.nextLevel();
+            onStart();
+          },
+        })
+      );
+    } else {
+      game.changeState(
+        new EndState({
+          game,
+          player,
+          onNext: () => {
+            game.levelSystem.nextLevel();
+            onStart();
+          },
+        })
+      );
+    }
+    
   }
 
   game.levelSystem.changeLevel(Level1({ game }));
