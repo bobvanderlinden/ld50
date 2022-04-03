@@ -7,7 +7,7 @@ export default function CommonObjects({ game }) {
   const images = game.resources.images;
 
   return [
-    new Start({ x: 700, y: 500 }),
+    new Start({ x: 1400, y: 450 }),
     new Thing({
       image: images["school"],
       x: 1400,
