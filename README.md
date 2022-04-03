@@ -17,7 +17,7 @@ You are a supervisor of a school playground on which children are having fun. Du
 - You need to take care of the children during recess, when children have distress they will start crying. You can complete a level by solving all distress during the set amount of time, their break.
   - The child in distress shows tears (:sweat_drops:) and an exclamation mark (:exclamation:) so you know where to go.
   - When you move close enough to a child in distress it will resolve their distress
-- The panic-o-meter will increase by one when a child goes into a panic, when you have more than 3 children in panic-mode you will loose
+- The panic-o-meter will increase by one when a child goes into a panic, when you have more than 5 children in panic-mode you will loose
 - Difficulty will increase by having less time in between the children that need attention / more children on the playground.
 You cannot walk through the playground equipment.
 
@@ -29,9 +29,8 @@ npm start
 
 ## Credits
 
-- [@bobvanderlinden](https://github.com/bobvanderlinden/) (Lead programmer A)
-- [@minthamie](https://github.com/minthamie/) (Art)
+- [@bobvanderlinden](https://github.com/bobvanderlinden/) (Lead programmer A, Sound Engineer)
+- [@minthamie](https://github.com/minthamie/) (Art, Programmer, Sound Engineer)
 - [@mirandavdende](https://github.com/mirandavdende) (Story teller)
 - [@nickschot](https://github.com/nickschot/) (Brainstorm)
-- [@srekke](https://github.com/srekke) (Music)
 - [@timendus](https://github.com/timendus) (Lead programmer 1)
