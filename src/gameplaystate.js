@@ -50,7 +50,7 @@ export default class GameplayState {
     const keys = this.game.keys;
     const x = sign(keys.d) - sign(keys.a);
     const y = sign(keys.s) - sign(keys.w);
-    this.player.movement.set(x, y);
+    this.player.movement.set(x, y).normalizeOrZero();
   }
 
   updatePanicKids(dt) {
