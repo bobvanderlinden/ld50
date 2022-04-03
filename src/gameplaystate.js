@@ -1,11 +1,13 @@
 import { lerp, pickRandom } from "./engine/math";
 
 export default class GameplayState {
-  constructor({ game, player, onFail }) {
+  constructor({ game, player, onFail, onSuccess }) {
     this.game = game;
     this.player = player;
     this.panicOMeterValue = 0;
+    this.time = 30;
     this.onFail = onFail;
+    this.onSuccess = onSuccess
     this.draw = this.draw.bind(this);
     this.update = this.update.bind(this);
     this.keydown = this.keydown.bind(this);
@@ -30,6 +32,10 @@ export default class GameplayState {
     this.updateMovement(dt);
     this.updatePanicKids(dt);
     this.updatePanicOMeter(dt);
+    this.time -= dt;
+    if (this.time <= 0) {
+      this.onSuccess();
+    }
     next(dt);
   }
 

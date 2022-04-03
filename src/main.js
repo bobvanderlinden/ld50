@@ -20,6 +20,8 @@ import { handleCollision } from "./engine/physics.js";
 import Thing from "./entities/thing";
 import { lerp } from "./engine/math.js";
 import FailState from "./failstate.js";
+import SuccessState from "./successstate.js";
+
 
 let game;
 const rs = {
@@ -54,6 +56,7 @@ const rs = {
     "failed",
     "tears_1",
     "tears_2",
+    "next_level",
   ],
 };
 
@@ -333,11 +336,15 @@ function startGame(err) {
   }
 
   function onStart() {
-    game.changeState(new GameplayState({ game, player, onFail }));
+    game.changeState(new GameplayState({ game, player, onFail, onSuccess }));
   }
 
   function onFail() {
     game.changeState(new FailState({ game, player, onNext: onStart }));
+  }
+
+  function onSuccess() {
+    game.changeState(new SuccessState({ game, player, onNext: onStart }));
   }
 
   onStart();
