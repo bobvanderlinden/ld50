@@ -36,7 +36,7 @@ export default class Child extends Person {
           ? new Vector(1, 0).rotate(Math.PI * 2 * Math.random())
           : this.velocity.clone().normalize();
       this.velocity.setV(direction).multiply(200);
-      this.updateBobbing(dt, this.bobRate / 3);
+      this.updateBobbing(dt, this.bobRate / 2);
     }
     if (this.time > 0) return;
     this[`transitionFrom${this.state}`]();
@@ -76,7 +76,7 @@ export default class Child extends Person {
     super.draw(g);
 
     if (this.state === "Panic") {
-      const tears = this.tears[(this.time * 3) % this.tears.length | 0];
+      const tears = this.tears[(this.time * 4) % this.tears.length | 0];
       g.drawCenteredImage(tears, this.position.x, this.position.y - 113);
 
       g.drawCenteredImage(
