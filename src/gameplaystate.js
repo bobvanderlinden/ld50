@@ -82,14 +82,10 @@ export default class GameplayState {
     // Show it on the Panic'O'Meter™️
     const panic = this.game.resources.images["panic_o_meter"];
     const needle = this.game.resources.images["needle"];
-    g.drawCenteredImage(panic, 2650, 100);
-    g.save();
-    g.context.translate(2648, 155);
-    g.context.rotate(
-      lerp(-0.9 * Math.PI, -0.1 * Math.PI, this.panicOMeterValue)
-    );
-    g.drawImage(needle, -134, -11);
-    g.restore();
+    g.drawCenteredImage(panic, 2400, 150);
+    g.rotate(2400,250, lerp(-0.9 * Math.PI, -0.1 * Math.PI, this.panicOMeterValue), ()=> {
+      g.drawCenteredImage(needle,2400,250)
+    } )
     next(g);
   }
 
