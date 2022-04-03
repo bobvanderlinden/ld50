@@ -123,6 +123,6 @@ export default class GameplayState {
   }
 
   resetPanicCountdown() {
-    this.panicCountdown = lerp(10, 15, Math.random());
+    this.panicCountdown = lerp(3, 5, Math.random());
   }
 }
