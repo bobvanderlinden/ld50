@@ -7,7 +7,7 @@ export default class GameplayState {
     this.panicOMeterValue = 0;
     this.time = 30;
     this.onFail = onFail;
-    this.onSuccess = onSuccess
+    this.onSuccess = onSuccess;
     this.draw = this.draw.bind(this);
     this.update = this.update.bind(this);
     this.keydown = this.keydown.bind(this);
@@ -80,13 +80,35 @@ export default class GameplayState {
     // Recess Timer
     this.drawClock(g);
     // Show it on the Panic'O'Meter™️
+    this.drawPanicOMeter(g);
+    next(g);
+  }
+
+  drawClock(g) {
+    const clockBackground = this.game.resources.images["clock_background"];
+    g.drawCenteredImage(clockBackground, 200, 200);
+    g.fillStyle("#7CFC00");
+    g.fillLoading(200, 200, 130, -this.time / 30);
+    const clockStripes = this.game.resources.images["clock_stripes"];
+    g.drawCenteredImage(clockStripes, 200, 200);
+    const clockHand = this.game.resources.images["clock_hand"];
+    g.rotate(200, 200, (-this.time / 30) * Math.PI * 2 - 0.5 * Math.PI, () => {
+      g.drawCenteredImage(clockHand, 200, 200);
+    });
+  }
+
+  drawPanicOMeter(g) {
     const panic = this.game.resources.images["panic_o_meter"];
     const needle = this.game.resources.images["needle"];
     g.drawCenteredImage(panic, 2400, 150);
-    g.rotate(2400,250, lerp(-0.9 * Math.PI, -0.1 * Math.PI, this.panicOMeterValue), ()=> {
-      g.drawCenteredImage(needle,2400,250)
-    } )
-    next(g);
+    g.rotate(
+      2400,
+      250,
+      lerp(-0.9 * Math.PI, -0.1 * Math.PI, this.panicOMeterValue),
+      () => {
+        g.drawCenteredImage(needle, 2400, 250);
+      }
+    );
   }
 
   panicChild() {
@@ -98,19 +120,6 @@ export default class GameplayState {
     kid.panic();
 
     this.resetPanicCountdown();
-  }
-
-  drawClock(g) {
-    const clockBackground = this.game.resources.images["clock_background"];
-    g.drawCenteredImage(clockBackground, 200, 200);
-    g.fillStyle('#7CFC00');
-    g.fillLoading(200, 200, 130, -this.time/30)
-    const clockStripes = this.game.resources.images["clock_stripes"];
-    g.drawCenteredImage(clockStripes, 200, 200);
-    const clockHand = this.game.resources.images["clock_hand"]
-    g.rotate(200, 200, -this.time/30*Math.PI*2-0.5*Math.PI, ()=>{
-      g.drawCenteredImage(clockHand, 200, 200);
-    } )
   }
 
   resetPanicCountdown() {
