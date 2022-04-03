@@ -74,7 +74,7 @@ platform.once("load", () => {
     collision,
   ]);
 
-  game.mouse = new Mouse({ game });
+  game.mouse = new Mouse({ game, debug: false });
 
   game.resources.status.on("changed", () => {
     game.graphics.context.clearRect(0, 0, game.width, game.height);
