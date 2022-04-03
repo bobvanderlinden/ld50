@@ -26,10 +26,19 @@ class Mouse extends Vector {
 
   getMousePosition(event) {
     const boundingRect = this.game.canvas.getBoundingClientRect();
-    return new Vector(
+    const boundingWidth = boundingRect.right - boundingRect.left;
+    const boundingHeight = boundingRect.bottom - boundingRect.top;
+
+    const result = new Vector(
       event.pageX - boundingRect.x,
       event.pageY - boundingRect.y
     );
+
+    // Transform coords to game coords.
+    result.x *= this.game.width / boundingWidth;
+    result.y *= this.game.height / boundingHeight;
+
+    return result;
   }
 
   mouseup(event) {

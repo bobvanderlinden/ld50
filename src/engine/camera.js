@@ -2,11 +2,11 @@ import Vector from "./vector.js";
 
 class Camera extends Vector {
   zoom = 1;
-  worldWidth = 2048;
 
-  constructor({ game }) {
+  constructor({ game, worldWidth }) {
     super(0, 0);
     this.game = game;
+    this.worldWidth = worldWidth ?? game.width;
     this.draw = this.draw.bind(this);
 
     this.game.chains.draw.camera = this.draw;
@@ -14,12 +14,13 @@ class Camera extends Vector {
       this.draw,
       this.game.chains.draw.objects
     );
+    this.reset();
   }
 
   screenToWorld(screenV, out) {
     var ptm = this.getPixelsPerMeter();
-    out.x = (screenV.x - this.game.width * 0.5) / ptm + this.game.camera.x;
-    out.y = (screenV.y - this.game.height * 0.5) / ptm + this.game.camera.y;
+    out.x = screenV.x / ptm + this.game.camera.x;
+    out.y = screenV.y / ptm + this.game.camera.y;
   }
 
   getPixelsPerMeter() {
@@ -41,10 +42,12 @@ class Camera extends Vector {
     g.save();
     g.context.scale(ptm, ptm);
     g.context.lineWidth /= ptm;
-    g.context.translate(
-      (this.game.width / ptm) * 0.5,
-      (this.game.height / ptm) * 0.5
-    );
+
+    // Keep camera X/Y in center of view.
+    // g.context.translate(
+    //   (this.game.width / ptm) * 0.5,
+    //   (this.game.height / ptm) * 0.5
+    // );
 
     g.context.translate(this.x, -this.y);
 

@@ -18,6 +18,7 @@ import { lerp } from "./engine/math.js";
 import FailState from "./failstate.js";
 import Level1 from "./levels/level1";
 import SuccessState from "./successstate.js";
+import Camera from "./engine/camera.js";
 
 let game;
 const rs = {
@@ -104,18 +105,22 @@ function startGame(err) {
 
   game.levelSystem = new LevelSystem({ game });
 
-  function drawBackground(g, next) {
+  game.camera = new Camera({ game, worldWidth: 2800 });
+
+  function drawBackgroundColor(g, next) {
     g.fillStyle("lightgray");
     g.fillRectangle(0, 0, game.width, game.height);
-    const scaling = game.width / 2800;
-    g.scale(0, 0, scaling, scaling, () => {
-      g.drawImage(images["stones"], 0, 0);
-      g.drawImage(images["blurred_grass"], 0, 0);
-      next(g);
-    });
+    next(g);
   }
 
-  game.chains.draw.insertBefore(drawBackground, game.chains.draw.objects);
+  function drawBackground(g, next) {
+    g.drawImage(images["stones"], 0, 0);
+    g.drawImage(images["blurred_grass"], 0, 0);
+    next(g);
+  }
+
+  game.chains.draw.insertBefore(drawBackgroundColor, game.chains.draw.camera);
+  game.chains.draw.insertAfter(drawBackground, game.chains.draw.camera);
 
   game.chains.draw.push((g, next) => {
     const objs = [...game.objects.lists.draw].sort(
@@ -133,18 +138,27 @@ function startGame(err) {
   });
 
   // Show collisions for debugging
+  game.chains.draw.push((g, next) => {
+    g.strokeStyle("red");
+    for (const collidable of game.objects.lists.collidable) {
+      g.strokeCircle(
+        collidable.position.x,
+        collidable.position.y,
+        collidable.collisionRadius
+      );
+    }
+    next(g);
+  });
 
-  // game.chains.draw.push((g, next) => {
-  //   g.strokeStyle("red");
-  //   for (const collidable of game.objects.lists.collidable) {
-  //     g.strokeCircle(
-  //       collidable.position.x,
-  //       collidable.position.y,
-  //       collidable.collisionRadius
-  //     );
-  //   }
-  //   next(g);
-  // });
+  // Draw cursor.
+  game.chains.draw.push((g, next) => {
+    g.fillStyle("blue");
+    const worldPos = new Vector();
+    game.camera.screenToWorld(game.mouse, worldPos);
+    g.fillCircle(worldPos.x, worldPos.y, 20);
+
+    next(g);
+  });
 
   game.getRandomPosition = function getRandomPosition() {
     return new Vector(
