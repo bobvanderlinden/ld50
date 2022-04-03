@@ -104,7 +104,7 @@ export default class GameplayState {
     g.rotate(
       2400,
       250,
-      lerp(-0.9 * Math.PI, -0.1 * Math.PI, this.panicOMeterValue),
+      lerp(-1 * Math.PI, -0.01 * Math.PI, this.panicOMeterValue),
       () => {
         g.drawCenteredImage(needle, 2400, 250);
       }
