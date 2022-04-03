@@ -161,7 +161,7 @@ export function handleCollision(collidables, collisionlines) {
       var collidable = collidableCollision[0];
       var collisions = collidableCollision[1];
       var collisionCount = collisions.length;
-      handleLineCollision(collidable, 0.0, collisionlines, collisions);
+      handleLineCollision(collidable, 0.7, collisionlines, collisions);
 
       var pa = collidable;
       collidableCollisions.forEach(function (collidableCollisionB) {
@@ -169,7 +169,7 @@ export function handleCollision(collidables, collisionlines) {
           return;
         }
         var pb = collidableCollisionB[0];
-        var collision = handleCircleCollision(pa, pb, 0.0);
+        var collision = handleCircleCollision(pa, pb, 0.7);
         if (collision) {
           collidableCollision[1].push(collision);
           collidableCollisionB[1].push({
