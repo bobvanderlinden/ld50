@@ -13,7 +13,7 @@ import Mouse from "./engine/mouse.js";
 import Player from "./entities/player";
 import GameplayState from "./gameplaystate";
 import Vector from "./engine/vector";
-import { handleCollision } from "./engine/physics.js";
+import { createBox, handleCollision } from "./engine/physics.js";
 import { lerp } from "./engine/math.js";
 import FailState from "./failstate.js";
 import Level1 from "./levels/level1";
@@ -139,32 +139,16 @@ function startGame(err) {
     next(g);
   });
 
+  const worldBoundaries = createBox([
+    new Vector(0, 390),
+    new Vector(0, 1600),
+    new Vector(2800, 1600),
+    new Vector(2800, 336),
+  ]);
+
   game.chains.update.push((dt, next) => {
-    handleCollision([...game.objects.lists.collidable], []);
+    handleCollision([...game.objects.lists.collidable], worldBoundaries);
     next(dt);
-  });
-
-  // Show collisions for debugging
-  game.chains.draw.push((g, next) => {
-    g.strokeStyle("red");
-    for (const collidable of game.objects.lists.collidable) {
-      g.strokeCircle(
-        collidable.position.x,
-        collidable.position.y,
-        collidable.collisionRadius
-      );
-    }
-    next(g);
-  });
-
-  // Draw cursor.
-  game.chains.draw.push((g, next) => {
-    g.fillStyle("blue");
-    const worldPos = new Vector();
-    game.camera.screenToWorld(game.mouse, worldPos);
-    g.fillCircle(worldPos.x, worldPos.y, 20);
-
-    next(g);
   });
 
   game.getRandomPosition = function getRandomPosition() {
