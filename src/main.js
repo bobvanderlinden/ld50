@@ -173,12 +173,29 @@ function startGame(err) {
   }
 
   function onFail() {
-    game.levelSystem.restartLevel();
-    game.changeState(new FailState({ game, player, onNext: onStart }));
+    game.changeState(
+      new FailState({
+        game,
+        player,
+        onNext: () => {
+          game.levelSystem.restartLevel();
+          onStart();
+        },
+      })
+    );
   }
 
   function onSuccess() {
-    game.changeState(new SuccessState({ game, player, onNext: onStart }));
+    game.changeState(
+      new SuccessState({
+        game,
+        player,
+        onNext: () => {
+          game.levelSystem.nextLevel();
+          onStart();
+        },
+      })
+    );
   }
 
   game.levelSystem.changeLevel(Level1({ game }));
