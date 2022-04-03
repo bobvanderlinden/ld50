@@ -78,13 +78,10 @@ platform.once("load", () => {
 
   game.resources.status.on("changed", () => {
     game.graphics.context.clearRect(0, 0, game.width, game.height);
-    game.graphics.context.fillStyle = "black";
+    game.graphics.context.fillStyle = "rgba(255,255,255,0.5)";
     game.graphics.context.font = "arial";
-    game.graphics.fillCenteredText(
-      `Preloading ${game.resources.status.ready} / ${game.resources.status.total}...`,
-      400,
-      300
-    );
+    const pct = game.resources.status.ready / game.resources.status.total;
+    game.graphics.fillLoading(game.width / 2, game.height / 2, 100, pct);
   });
 });
 
@@ -99,8 +96,9 @@ function startGame(err) {
   game.objects.lists.player = game.objects.createIndexList("player");
   game.objects.lists.draw = game.objects.createIndexList("draw");
   game.objects.lists.update = game.objects.createIndexList("update");
-  game.objects.lists.collidable =
-    game.objects.createIndexList("collisionRadius");
+  game.objects.lists.collidable = game.objects.createIndexList(
+    "collisionRadius"
+  );
   game.objects.lists.kids = game.objects.createIndexList("kid");
 
   // Auto-refresh
