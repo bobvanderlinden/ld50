@@ -151,6 +151,13 @@ function startGame(err) {
     next(dt);
   });
 
+  game.getRandomPosition = function getRandomPosition() {
+    return new Vector(
+      lerp(0, 2800, Math.random()),
+      lerp(500, 1575, Math.random())
+    );
+  };
+
   let player;
 
   game.on("levelchanged", () => {
@@ -207,6 +214,7 @@ function startGame(err) {
         })
       );
     }
+    
   }
 
   // onStart();
