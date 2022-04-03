@@ -1,7 +1,7 @@
 import Vector from "../engine/vector";
 import Child from "../entities/child";
 import CommonObjects from "./commonobjects";
-import Level2 from './level2';
+import Level2 from "./level2";
 
 export default function Level1({ game }) {
   const images = game.resources.images;
@@ -15,6 +15,8 @@ export default function Level1({ game }) {
         image,
         exclamation: images["exclamation"],
         tears: [images.tears_1, images.tears_2],
+        cry: game.resources.audio.group("cry"),
+        happy: game.resources.audio.group("happy"),
         x: position.x,
         y: position.y,
         origin: new Vector(image.width / 2, 0.9 * image.height),
@@ -24,10 +26,7 @@ export default function Level1({ game }) {
   }
 
   return {
-    objects: [
-      ...CommonObjects({game}),
-      ...kids,
-    ],
+    objects: [...CommonObjects({ game }), ...kids],
     nextLevel: Level2,
     clone: Level1,
   };

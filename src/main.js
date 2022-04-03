@@ -24,7 +24,28 @@ import StartState from "./startstate.js";
 
 let game;
 const rs = {
-  audio: ["test", "bell", "fail"],
+  audio: [
+    "test",
+    "bell",
+    "fail",
+    "cry_1",
+    "cry_2",
+    "cry_3",
+    "cry_4",
+    "cry_5",
+    "cry_6",
+    "cry_7",
+    "cry_8",
+    "cry_9",
+    "cry_10",
+    "happy_1",
+    "happy_2",
+    "happy_3",
+    "happy_4",
+    "happy_5",
+    "happy_6",
+    "happy_7",
+  ],
   images: [
     "test",
     "blurred_grass",
@@ -65,6 +86,16 @@ const rs = {
   ],
 };
 
+function resourceGroup(resources, name) {
+  let i = 1;
+  const result = [];
+  while (resources[`${name}_${i}`]) {
+    result.push(resources[`${name}_${i}`]);
+    i++;
+  }
+  return result;
+}
+
 platform.once("load", () => {
   const canvas = document.getElementById("main");
   game = new Game(startGame, canvas, [
@@ -96,6 +127,9 @@ function startGame(err) {
   if (err) {
     console.error(err);
   }
+
+  game.resources.images.group = resourceGroup.bind(null, game.resources.images);
+  game.resources.audio.group = resourceGroup.bind(null, game.resources.audio);
 
   const images = game.resources.images;
   // var audio = game.resources.audio;

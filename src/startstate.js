@@ -31,6 +31,7 @@ export default class StartState {
     if (this.info) {
       this.onNext();
     } else {
+      this.game.music.play();
       this.info = true;
     }
   }
@@ -45,8 +46,7 @@ export default class StartState {
     }
   }
 
-  update(dt, next) {
-  }
+  update(dt, next) {}
 
   draw(g, next) {
     g.drawImage(this.game.resources.images["start"], 0, 0);

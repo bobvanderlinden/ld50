@@ -1,5 +1,5 @@
 import Person from "./person";
-import { lerp } from "../engine/math";
+import { lerp, pickRandom } from "../engine/math";
 import Player from "./player";
 import Vector from "../engine/vector";
 
@@ -11,10 +11,12 @@ export default class Child extends Person {
   bobAngle = 0.1;
   areaRadius = 500;
 
-  constructor({ x, y, image, exclamation, tears, origin }) {
+  constructor({ x, y, image, exclamation, tears, origin, cry, happy }) {
     super({ x, y, image, origin });
     this.exclamation = exclamation;
     this.tears = tears;
+    this.cry = cry;
+    this.happy = happy;
     this.time = lerp(1, 5, Math.random());
     this.areaCenter = new Vector(x, y);
   }
@@ -63,13 +65,18 @@ export default class Child extends Person {
 
   touch(other) {
     if (other instanceof Player) {
+      if (this.state === "Panic") {
+        pickRandom(this.happy).play();
+      }
       this.transitionFromIdle();
     }
   }
 
   panic() {
+    if (this.state === "Panic") return;
     this.state = "Panic";
     this.time = 99999;
+    pickRandom(this.cry).play();
   }
 
   draw(g) {
