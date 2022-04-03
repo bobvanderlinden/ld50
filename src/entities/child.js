@@ -82,4 +82,13 @@ export default class Child extends Person {
       );
     }
   }
+
+  drawDebug(g) {
+    g.strokeStyle("blue");
+    g.strokeCircle(this.areaCenter.x, this.areaCenter.y, this.areaRadius);
+
+    if (this.targetPosition) {
+      g.strokeCross(this.targetPosition.x, this.targetPosition.y, 20);
+    }
+  }
 }
