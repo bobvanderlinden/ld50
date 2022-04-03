@@ -117,6 +117,16 @@ export default class Graphics {
     this.context.stroke();
   }
 
+  strokeCross(x, y, radius) {
+    this.strokeLine(x - radius, y - radius, x + radius, y + radius);
+    this.strokeLine(x + radius, y - radius, x - radius, y + radius);
+  }
+
+  strokePlus(x, y, radius) {
+    this.strokeLine(x - radius, y, x + radius, y);
+    this.strokeLine(x, y - radius, x, y + radius);
+  }
+
   translate(x, y, translated) {
     this.save();
     this.context.translate(x, y);

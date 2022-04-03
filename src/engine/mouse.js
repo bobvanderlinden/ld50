@@ -3,7 +3,7 @@ import Vector from "./vector.js";
 class Mouse extends Vector {
   over = false;
   buttons = {};
-  constructor({ game }) {
+  constructor({ game, debug }) {
     super(0, 0);
     this.game = game;
 
@@ -22,6 +22,10 @@ class Mouse extends Vector {
       this.DOMMouseScroll,
       true
     );
+
+    if (debug) {
+      game.chains.draw.push(this.drawDebug);
+    }
   }
 
   getMousePosition(event) {
@@ -77,6 +81,15 @@ class Mouse extends Vector {
     this.setV(this.getMousePosition(event));
 
     this.game.emit("mousewheel", -event.detail);
+  }
+
+  drawDebug(g, next) {
+    g.fillStyle(this.buttons.length ? "red" : "blue");
+    const worldPos = new Vector();
+    this.game.camera.screenToWorld(this, worldPos);
+    g.fillCircle(worldPos.x, worldPos.y, 20);
+
+    next(g);
   }
 }
 

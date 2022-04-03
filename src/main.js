@@ -148,29 +148,6 @@ function startGame(err) {
     next(dt);
   });
 
-  // Show collisions for debugging
-  game.chains.draw.push((g, next) => {
-    g.strokeStyle("red");
-    for (const collidable of game.objects.lists.collidable) {
-      g.strokeCircle(
-        collidable.position.x,
-        collidable.position.y,
-        collidable.collisionRadius
-      );
-    }
-    next(g);
-  });
-
-  // Draw cursor.
-  game.chains.draw.push((g, next) => {
-    g.fillStyle("blue");
-    const worldPos = new Vector();
-    game.camera.screenToWorld(game.mouse, worldPos);
-    g.fillCircle(worldPos.x, worldPos.y, 20);
-
-    next(g);
-  });
-
   game.getRandomPosition = function getRandomPosition() {
     return new Vector(
       lerp(0, 2800, Math.random()),

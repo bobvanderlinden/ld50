@@ -218,3 +218,16 @@ export function getPlayerCollisions(players, collisionLines) {
     playercollisions: playercollisions,
   };
 }
+
+export function drawDebug(g, next) {
+  // Show collisions for debugging
+  g.strokeStyle("red");
+  for (const collidable of game.objects.lists.collidable) {
+    g.strokeCircle(
+      collidable.position.x,
+      collidable.position.y,
+      collidable.collisionRadius
+    );
+  }
+  next(g);
+}
